@@ -5,110 +5,196 @@
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SearchableFlatList } from "react-native-searchable-list";
+
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  TextInput,
+  Switch,
   View,
   Text,
   StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
-
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  pageContainer: {
+    padding: 10,
+    flex: 1
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  searchInputs: {
+    flexDirection: "row"
   },
-  body: {
-    backgroundColor: Colors.white,
+  search: {
+    flex: 8,
+    marginBottom: 20,
+    borderColor: "#D44744",
+    borderBottomWidth: 3,
+    padding: 10
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  switch: {
+    flex: 2
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  listItem: {
+    padding: 10,
+    borderColor: "#f4cfce",
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 2
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  info: {
+    padding: 10,
+    marginTop: 20,
+    borderColor: "#f4cfce",
+    borderWidth: 1
   },
-  highlight: {
-    fontWeight: '700',
+  row: {
+    flexDirection: "row",
+    backgroundColor: "#f4cfce"
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  row1: {
+    flexDirection: "row"
   },
+  prop: {
+    flex: 1,
+    padding: 10
+  },
+  val: {
+    alignSelf: "center",
+    flex: 1
+  }
 });
 
-export default App;
+const Tab = createBottomTabNavigator();
+
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+      </View>
+    )
+  }
+}
+
+// React.useEffect(() => {
+//   const loadArtefactList = navigation.addListener('focus', (e) => {
+//     // TODO: gonna be used for loading up the artefact list
+//     alert('Loading lists...');
+//   });
+//   return loadArtefactList;
+// }, [navigation]);
+
+class ArtefactsScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        "Artefact 1",
+        "Artefact 2",
+        "Artefact 3",
+        "Artefact 4",
+        "POGCHAMP",
+        "GAMER",
+        "weirdchamp"
+      ],
+      searchTerm: "",
+      searchAttribute: "",
+      ignoreCase: true
+    };
+  }
+
+  render() {
+    const { data, searchTerm, searchAttribute, ignoreCase } = this.state;
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={styles.pageContainer}>
+          <ScrollView>
+            <View style={styles.searchInputs}>
+              <TextInput
+                style={styles.search}
+                placeholder={
+                  ignoreCase
+                    ? "Search Artefacts"
+                    : "Search Wonders Case Sensitively"
+                }
+                onChangeText={searchTerm => this.setState({ searchTerm })}
+              />
+              <Switch
+                style={styles.switch}
+                value={ignoreCase}
+                tintColor={"#D44744"}
+                thumbTintColor={"#D44744"}
+                onTintColor={"#f4cfce"}
+                onValueChange={ignoreCase => {
+                  this.setState({ ignoreCase });
+                }}
+              />
+            </View>
+            <SearchableFlatList
+              style={styles.list}
+              data={data}
+              searchTerm={searchTerm}
+              ignoreCase={ignoreCase}
+              renderItem={({ item }) => (
+                <Text style={styles.listItem}>{item}</Text>
+              )}
+              keyExtractor={item => item}
+            />
+          </ScrollView>
+        </View>
+      </View>
+    );
+  }
+}
+
+class EventsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Events!</Text>
+      </View>
+    )
+  }
+}
+
+class StoreScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Store!</Text>
+      </View>
+    )
+  }
+}
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Artefacts" component={ArtefactsScreen} />
+      <Tab.Screen name="Events" component={EventsScreen} />
+      <Tab.Screen name="Store" component={StoreScreen} />
+
+    </Tab.Navigator>
+  );
+}
+
+const TabNavigator = createBottomTabNavigator()
+
+const AppContainer = createAppContainer(TabNavigator);
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs/>
+    </NavigationContainer>
+  );
+}
