@@ -11,6 +11,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { SearchableFlatList } from "react-native-searchable-list";
 
 import {
@@ -21,6 +22,7 @@ import {
   Switch,
   View,
   Text,
+  TouchableWithoutFeedback,
   StatusBar,
 } from 'react-native';
 
@@ -84,13 +86,6 @@ class HomeScreen extends React.Component {
   }
 }
 
-// React.useEffect(() => {
-//   const loadArtefactList = navigation.addListener('focus', (e) => {
-//     // TODO: gonna be used for loading up the artefact list
-//     alert('Loading lists...');
-//   });
-//   return loadArtefactList;
-// }, [navigation]);
 
 class ArtefactsScreen extends React.Component {
   constructor(props) {
@@ -110,6 +105,10 @@ class ArtefactsScreen extends React.Component {
       ignoreCase: true
     };
   }
+  actionOnRow(item) {
+    console.log("POGCHAMP" + item)
+  };
+
 
   render() {
     const { data, searchTerm, searchAttribute, ignoreCase } = this.state;
@@ -144,7 +143,9 @@ class ArtefactsScreen extends React.Component {
               searchTerm={searchTerm}
               ignoreCase={ignoreCase}
               renderItem={({ item }) => (
-                <Text style={styles.listItem}>{item}</Text>
+                <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
+                  <Text style={styles.listItem}>{item}</Text>
+                </TouchableWithoutFeedback>
               )}
               keyExtractor={item => item}
             />
@@ -175,26 +176,45 @@ class StoreScreen extends React.Component {
   }
 }
 
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Artefacts" component={ArtefactsScreen} />
-      <Tab.Screen name="Events" component={EventsScreen} />
-      <Tab.Screen name="Store" component={StoreScreen} />
+class ArtefactDetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Artefact Details!</Text>
+      </View>
+    )
+  }
+}
 
-    </Tab.Navigator>
+const Tabs = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function Home() {
+  return (
+    <Tabs.Navigator>
+      <Tabs.Screen name="Home" component={HomeScreen} />
+      <Tabs.Screen name="Artefacts" component={ArtefactsScreen} />
+      <Tabs.Screen name="Events" component={EventsScreen} />
+      <Tabs.Screen name="Store" component={StoreScreen} />
+
+    </Tabs.Navigator>
   );
 }
 
-const TabNavigator = createBottomTabNavigator()
+function Stacks() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Redland Museum" component={Home} />
+      <Stack.Screen name="ArtefactDetails" component={ArtefactDetailsScreen}/>
+    </Stack.Navigator>
+  )
+}
 
-const AppContainer = createAppContainer(TabNavigator);
 
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs/>
+      <Stacks/>
     </NavigationContainer>
   );
 }
