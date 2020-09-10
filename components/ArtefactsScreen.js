@@ -17,7 +17,7 @@ import {
 
 import styles from './styles';
 
-const data = [
+const initialData = [
   "Artefact 1",
   "Artefact 2",
   "Artefact 3",
@@ -27,12 +27,17 @@ const data = [
   "weirdchamp"
 ];
 export default function ArtefactsScreen(props) {
+  const {navigation } = props;
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
+  const [data, setData] = useState(initialData);
 
   function actionOnRow(item) {
     console.log("POGCHAMP" + item);
+    navigation.navigate("ArtefactDetails", {
+      Id: item
+    })
   };
 
   return (
