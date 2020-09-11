@@ -17,9 +17,9 @@ import {
   Text,
 } from 'react-native';
 
-import ArtefactsScreen from './components/Homescreen';
-import HomeScreen from './components/HomeScreen';
-
+import ArtefactsScreen from './components/ArtefactsScreen.js';
+import HomeScreen from './components/HomeScreen.js';
+import ArtefactDetailsScreen from "./components/ArtefactDetailScreen.js";
 
 class EventsScreen extends React.Component {
   render() {
