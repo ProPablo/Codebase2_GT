@@ -1,6 +1,8 @@
 # Codebase2_GT
 Mobile Frontend Developed by QUT Capstone Project team Green Tigers.
-Developed in React Native, here are some common issues/ instructions on how to setup the Codebase
+Developed in React Native, here are some common issues/ instructions on how to setup the Codebase.
+
+Also Migrated to Typescript, see: https://reactnative.dev/docs/typescript
 
 ## CodeBase 1 run instructions
 * Run Proxy
@@ -26,3 +28,7 @@ iex "netsh interface portproxy add v4tov4 listenport=8081 listenaddress=127.0.0.
 * disable auto migration 
 * update-database 
 * add-migration enable auto migration
+
+## Best Practices: 
+* Attempt to fit all code in lowest stack
+* Fit all interfaces in one file?

@@ -10,16 +10,19 @@ import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+
 
 import {
   View,
   Text,
 } from 'react-native';
 
-import ArtefactsScreen from './components/ArtefactsScreen.js';
-import HomeScreen from './components/HomeScreen.js';
-import ArtefactDetailsScreen from "./components/ArtefactDetailScreen.js";
+import ArtefactsScreen from './components/ArtefactsScreen';
+import HomeScreen from './components/HomeScreen';
+import { ArtefactStack } from './components/ArtefactStack';
+
+
+
 
 class EventsScreen extends React.Component {
   render() {
@@ -43,35 +46,25 @@ class StoreScreen extends React.Component {
 
 
 
-const Tabs = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function Home() {
+function Tabs() {
   return (
-    <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={HomeScreen} />
-      <Tabs.Screen name="Artefacts" component={ArtefactsScreen} />
-      <Tabs.Screen name="Events" component={EventsScreen} />
-      <Tabs.Screen name="Store" component={StoreScreen} />
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Artefacts" component={ArtefactStack} />
+      <Tab.Screen name="Events" component={EventsScreen} />
+      <Tab.Screen name="Store" component={StoreScreen} />
 
-    </Tabs.Navigator>
+    </Tab.Navigator>
   );
-}
-
-function Stacks() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Redland Museum" component={Home} />
-      <Stack.Screen name="ArtefactDetails" component={ArtefactDetailsScreen}/>
-    </Stack.Navigator>
-  )
 }
 
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stacks/>
+      <Tabs />
     </NavigationContainer>
   );
 }

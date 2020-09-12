@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { SearchableFlatList } from "react-native-searchable-list";
 
 import {
@@ -15,7 +12,11 @@ import {
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native';
+import { ArtefactStackParams } from './ArtefactStack';
 
+type NavigationProp = StackNavigationProp<ArtefactStackParams>
+
+// Refactor to create own Searchable List component
 
 const initialData = [
   "Artefact 1",
@@ -26,17 +27,23 @@ const initialData = [
   "GAMER",
   "weirdchamp"
 ];
-export default function ArtefactsScreen(props) {
-  const {navigation } = props;
+
+type Props = {
+  navigation : NavigationProp
+}
+
+
+const ArtefactsScreen : React.FC<Props> = ({navigation}) => {
+
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
   const [data, setData] = useState(initialData);
 
-  function actionOnRow(item) {
+  function actionOnRow(item: number) {
     console.log("POGCHAMP" + item);
     navigation.navigate("ArtefactDetails", {
-      Id: item
+      artefactId: item
     })
   };
 
@@ -128,3 +135,5 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default ArtefactsScreen;
