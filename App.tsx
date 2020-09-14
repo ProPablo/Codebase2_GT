@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,6 +20,7 @@ import {
 import ArtefactsScreen from './components/ArtefactsScreen';
 import HomeScreen from './components/HomeScreen';
 import { ArtefactStack } from './components/ArtefactStack';
+import { ArtefactsContext } from './components/ArtefactsContext';
 
 
 
@@ -62,9 +63,12 @@ function Tabs() {
 
 
 export default function App() {
+  const [artefacts, setArtefacts] = useState<IB>()
   return (
     <NavigationContainer>
-      <Tabs />
+      <ArtefactsContext.Provider value ={}>
+        <Tabs />
+      </ArtefactsContext.Provider>
     </NavigationContainer>
   );
 }
