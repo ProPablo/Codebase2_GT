@@ -15,10 +15,9 @@ export interface IBaseArtefactInfo {
     Description: string,
     File: string,
     FileExtension: string,
-    ArtefactInfoType: number,
+    ArtefactInfoType: number, // 0, 1, 2, 3 (Text, Image, Video, Audio)
     Content: string,
     Artefact: IBaseArtefact
-
 }
 
 export interface IBaseArtefact {
