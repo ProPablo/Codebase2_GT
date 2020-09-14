@@ -10,6 +10,17 @@ export interface IBaseCategoryZone {
     Name: string
 }
 
+export interface IBaseArtefactInfo {
+    Id: number, 
+    Description: string,
+    File: string,
+    FileExtension: string,
+    ArtefactInfoType: number,
+    Content: string,
+    Artefact: IBaseArtefact
+
+}
+
 export interface IBaseArtefact {
     Id: number,
     Name: string,
@@ -67,7 +78,8 @@ export interface IBaseExhibition {
     Organiser: string,
     Price_Adult: number,
     Price_Child: number,
-    Image: string
+    Image: string,
+    ImageFileType: string
 }
 
 export interface IExhibition extends IBaseExhibition {
@@ -86,6 +98,7 @@ export interface IBaseStoreItem {
 export interface IBaseStoreItemImage {
     Id: number,
     Image: string,
+    ImageFileType: string,
     FileType: string,
     StoreItem: IBaseStoreItem
 }
