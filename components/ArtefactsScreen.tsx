@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SearchableFlatList } from "react-native-searchable-list";
@@ -11,36 +11,21 @@ import {
   Text,
   TouchableWithoutFeedback,
   FlatList,
-  StyleSheet
+  StyleSheet, Pressable
 } from 'react-native';
 import { ArtefactStackParams } from './ArtefactStack';
-import { Artefact } from '../lib/Interfaces';
+import { IArtefact } from '../lib/Interfaces';
 import { artefactsURL } from '../lib/urls';
 import ArtefactListView from './ArtefactListView';
+import ArtefactsContext, { artefactsContextValue } from './ArtefactsContext';
 
 
 type NavigationProp = StackNavigationProp<ArtefactStackParams>
 
 // Refactor to create own Searchable List component
 
-const initialData = [
-  "Artefact 1",
-  "Artefact 2",
-  "Artefact 3",
-  "Artefact 4",
-  "POGCHAMP",
-  "GAMER",
-  "weirdchamp"
-];
-
 interface Props {
   navigation: NavigationProp
-}
-
-async function getArtefacts(): Promise<Artefact[]> {
-  const result = await fetch(artefactsURL);
-  const json = await result.json();
-  return json;
 }
 
 const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
@@ -48,13 +33,10 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
-  const [data, setData] = useState<Artefact[]>([]);
-
+  const [data, loaddata] = [1, 2];
   const [filtered, setfiltered] = useState(data);
 
-  useEffect(() => {
-    (async () => setData(await getArtefacts()))();
-  }, []);
+  const {artefacts, loadArtefacts} = useContext(ArtefactsContext);
 
   function actionOnRow(item: number) {
     console.log("POGCHAMP" + item);
@@ -88,9 +70,12 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
           </View>
 
           <FlatList
-            data={data}
+            data={artefacts}
             renderItem={({ item }) => (
-              <ArtefactListView artefact={item}/>
+              <Pressable onPress={() => actionOnRow(item.Id)}>
+                <ArtefactListView artefact={item}/>
+                {/* <Text style={styles.listItem}>{item.Name}</Text> */}
+              </Pressable>
             )}
             keyExtractor={(item)=>item.Id.toString()}
           ></FlatList>

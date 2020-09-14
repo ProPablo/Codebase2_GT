@@ -1,5 +1,11 @@
 import { createContext } from "react";
-import { IBaseArtefact } from "../lib/Interfaces";
-const ArtefactsContext = createContext<IBaseArtefact[]>([]);
+import { IArtefact, IBaseArtefact } from "../lib/Interfaces";
+export interface artefactsContextValue {
+    artefacts: IArtefact[];
+    loadArtefacts(): Promise<void>;
+}
+
+const ArtefactsContext = createContext<Partial<artefactsContextValue>>({});
 ArtefactsContext.displayName = "ArtefactsContext";
-export { ArtefactsContext };
+export default ArtefactsContext;
+

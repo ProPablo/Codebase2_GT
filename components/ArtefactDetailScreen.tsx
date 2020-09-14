@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import {
     View,
     Text,
+    Image,
+    StyleSheet
 } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { ArtefactStackParams } from './ArtefactStack';
+import ArtefactsContext from './ArtefactsContext';
 
 type ArtefactStackRoute = RouteProp<ArtefactStackParams, 'ArtefactDetails'>
 
@@ -13,25 +16,37 @@ interface Props {
     route: ArtefactStackRoute
 }
 
-const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
-    const [artefact, setartefact] = useState(null);
-    const { artefactId } = route.params;
-    useEffect(() => {
-        
-        (async () => {
-            const apiRes = await fetch("https://api.kanye.rest");
-            const json = await apiRes.json();
-            setartefact(json);
-        })();
-    }, []);
 
+const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
+
+    const { artefactId } = route.params;
+    const { artefacts } = useContext(ArtefactsContext);
+    if (!artefacts) {
+        return (<Text>Get stick bugged lol</Text>)
+    }
+    //console.log("artefacts from deatil scrren", artefacts);
+    const artefact = artefacts.find((item) => item.Id === artefactId);
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Artefact Details!</Text>
             <Text>This is id: {artefactId}</Text>
-            {artefact && <Text>{JSON.stringify(artefact, null, 2)} </Text>}
+            {artefact &&
+                <View>
+                    <Text> {artefact.Name}</Text>
+                    <Image source={{
+                        uri: "data:image/jpeg;base64," + artefact.Image, 
+                    }} style={styles.image} />
+                </View>
+            }
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    image: {
+        width: 50,
+        height: 50
+    }
+});
 
 export default ArtefactDetailScreen;

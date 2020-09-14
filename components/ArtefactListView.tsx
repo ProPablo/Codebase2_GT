@@ -1,15 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Artefact } from '../lib/Interfaces';
+import { IArtefact } from '../lib/Interfaces';
 
 interface Props {
-    artefact: Artefact
+    artefact: IArtefact
 }
 
 const ArtefactListView = ({artefact}: Props) => {
     
     return (
-        <View>
+        <View style={styles.listItem}>
             <Text>{artefact.Name}</Text>
             <Text>{artefact.Description}</Text>
         </View>
@@ -18,4 +18,12 @@ const ArtefactListView = ({artefact}: Props) => {
 
 export default ArtefactListView;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    listItem: {
+      padding: 10,
+      borderColor: "#f4cfce",
+      borderWidth: 1,
+      borderRadius: 10,
+      margin: 2
+    },
+  });

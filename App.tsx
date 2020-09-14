@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,12 +15,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   View,
   Text,
+  NativeModules
 } from 'react-native';
+
 
 import ArtefactsScreen from './components/ArtefactsScreen';
 import HomeScreen from './components/HomeScreen';
 import { ArtefactStack } from './components/ArtefactStack';
-import { ArtefactsContext } from './components/ArtefactsContext';
+import ArtefactsContext, { artefactsContextValue } from './components/ArtefactsContext';
+import { IArtefact, IBaseArtefact } from './lib/Interfaces';
+import { artefactsURL } from './lib/urls';
 
 
 
@@ -63,10 +67,35 @@ function Tabs() {
 
 
 export default function App() {
-  const [artefacts, setArtefacts] = useState<IB>()
+  const [artefacts, setArtefacts] = useState<IArtefact[]>([]);
+
+  async function getArtefacts(): Promise<IArtefact[]> {
+    let json;
+    try {
+      const result = await fetch(artefactsURL);
+      json = await result.json();
+
+    } catch (error) {
+      console.error("ERROR RETREIVING ARTEFACTS");
+    }
+
+    return json;
+  }
+
+  const loadArtefacts = async () => {
+    setArtefacts(await getArtefacts());
+  }
+
+  useEffect(() => {
+    loadArtefacts();
+    console.log("Logging artefacts", artefacts);
+  }, []);
+
+  const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
   return (
+
     <NavigationContainer>
-      <ArtefactsContext.Provider value ={}>
+      <ArtefactsContext.Provider value={providerValue}>
         <Tabs />
       </ArtefactsContext.Provider>
     </NavigationContainer>
