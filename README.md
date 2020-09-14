@@ -5,7 +5,10 @@ Developed in React Native, here are some common issues/ instructions on how to s
 Also Migrated to Typescript, see: https://reactnative.dev/docs/typescript
 
 ## CodeBase 1 run instructions
-* Run Proxy
+* Run Proxy (In powershell)
+```
+npx iisexpress-proxy 8181 to 9191
+```
 
 ## WSL run instructions:
 * On cmd:

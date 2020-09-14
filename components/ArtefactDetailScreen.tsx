@@ -9,7 +9,7 @@ import { ArtefactStackParams } from './ArtefactStack';
 
 type ArtefactStackRoute = RouteProp<ArtefactStackParams, 'ArtefactDetails'>
 
-export interface Props {
+interface Props {
     route: ArtefactStackRoute
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SearchableFlatList } from "react-native-searchable-list";
@@ -10,9 +10,14 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
+  FlatList,
   StyleSheet
 } from 'react-native';
 import { ArtefactStackParams } from './ArtefactStack';
+import { Artefact } from '../lib/Interfaces';
+import { artefactsURL } from '../lib/urls';
+import ArtefactListView from './ArtefactListView';
+
 
 type NavigationProp = StackNavigationProp<ArtefactStackParams>
 
@@ -28,17 +33,28 @@ const initialData = [
   "weirdchamp"
 ];
 
-type Props = {
-  navigation : NavigationProp
+interface Props {
+  navigation: NavigationProp
 }
 
+async function getArtefacts(): Promise<Artefact[]> {
+  const result = await fetch(artefactsURL);
+  const json = await result.json();
+  return json;
+}
 
-const ArtefactsScreen : React.FC<Props> = ({navigation}) => {
+const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
 
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<Artefact[]>([]);
+
+  const [filtered, setfiltered] = useState(data);
+
+  useEffect(() => {
+    (async () => setData(await getArtefacts()))();
+  }, []);
 
   function actionOnRow(item: number) {
     console.log("POGCHAMP" + item);
@@ -56,10 +72,10 @@ const ArtefactsScreen : React.FC<Props> = ({navigation}) => {
               style={styles.search}
               placeholder={
                 ignoreCase
-                  ? "Search Artefacts"
-                  : "Search Wonders Case Sensitively"
+                  ? "Search Artefacts (case insensitive)"
+                  : "Search Artefacts"
               }
-              onChangeText={searchTerm => setsearchAttribute(searchTerm)}
+              onChangeText={searchTerm => setsearchTerm(searchTerm)}
             />
             <Switch
               style={styles.switch}
@@ -70,7 +86,17 @@ const ArtefactsScreen : React.FC<Props> = ({navigation}) => {
               onValueChange={ignoreCase => setignoreCase(ignoreCase)}
             />
           </View>
-          <SearchableFlatList
+
+          <FlatList
+            data={data}
+            renderItem={({ item }) => (
+              <ArtefactListView artefact={item}/>
+            )}
+            keyExtractor={(item)=>item.Id.toString()}
+          ></FlatList>
+
+
+          {/* <SearchableFlatList
             style={styles.list}
             data={data}
             searchTerm={searchTerm}
@@ -81,7 +107,7 @@ const ArtefactsScreen : React.FC<Props> = ({navigation}) => {
               </TouchableWithoutFeedback>
             )}
             keyExtractor={item => item}
-          />
+          /> */}
         </ScrollView>
       </View>
     </View>
