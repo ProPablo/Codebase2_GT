@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { SearchableFlatList } from "react-native-searchable-list";
+//import { SearchableFlatList } from "react-native-searchable-list";
 
 import {
   ScrollView,
@@ -11,13 +11,14 @@ import {
   Text,
   TouchableWithoutFeedback,
   FlatList,
-  StyleSheet, Pressable
+  StyleSheet, Pressable, Button
 } from 'react-native';
 import { ArtefactStackParams } from './ArtefactStack';
-import { IArtefact } from '../lib/Interfaces';
-import { artefactsURL } from '../lib/urls';
+import { IArtefact } from '../../lib/Interfaces';
+import { artefactsURL } from '../../lib/urls';
 import ArtefactListView from './ArtefactListView';
 import ArtefactsContext, { artefactsContextValue } from './ArtefactsContext';
+import { Card, Icon } from 'react-native-elements';
 
 
 type NavigationProp = StackNavigationProp<ArtefactStackParams>
@@ -39,7 +40,6 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
   const {artefacts, loadArtefacts} = useContext(ArtefactsContext);
 
   function actionOnRow(item: number) {
-    console.log("POGCHAMP" + item);
     navigation.navigate("ArtefactDetails", {
       artefactId: item
     })
@@ -48,7 +48,6 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pageContainer}>
-        <ScrollView>
           <View style={styles.searchInputs}>
             <TextInput
               style={styles.search}
@@ -81,19 +80,6 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
           ></FlatList>
 
 
-          {/* <SearchableFlatList
-            style={styles.list}
-            data={data}
-            searchTerm={searchTerm}
-            ignoreCase={ignoreCase}
-            renderItem={({ item }) => (
-              <TouchableWithoutFeedback onPress={() => actionOnRow(item)}>
-                <Text style={styles.listItem}>{item}</Text>
-              </TouchableWithoutFeedback>
-            )}
-            keyExtractor={item => item}
-          /> */}
-        </ScrollView>
       </View>
     </View>
   );
@@ -102,7 +88,8 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   pageContainer: {
     padding: 10,
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff',
   },
   searchInputs: {
     flexDirection: "row"
@@ -116,13 +103,6 @@ const styles = StyleSheet.create({
   },
   switch: {
     flex: 2
-  },
-  listItem: {
-    padding: 10,
-    borderColor: "#f4cfce",
-    borderWidth: 1,
-    borderRadius: 10,
-    margin: 2
   },
   info: {
     padding: 10,

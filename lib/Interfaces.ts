@@ -110,21 +110,17 @@ export interface IBaseTour {
     Artefacts: IBaseArtefact[]
 }
 
-//For Reference
-async function getArtefact() : Promise<IBaseArtefact>{
-    return (await fetch('https://api.kanye.rest')).json();
-}
+// //For Reference
+// async function getArtefact() : Promise<IBaseArtefact>{
+//     return (await fetch('https://api.kanye.rest')).json();
+// }
 
-const resJson : IBaseExhibition = await res.json();
-consume(new Date(resJson.StartDate))
-const finalExhibition = processExhibition(resJson);
+// const resJson : IBaseExhibition = await res.json();
+// consume(new Date(resJson.StartDate))
+// const finalExhibition = processExhibition(resJson);
 
-consooooomer(finalExhibition);
+// consooooomer(finalExhibition);
 
-function processExhibition(input: IBaseExhibition) : IExhibition {
-    return {...input, StartDate: new Date(input.StartDate)};
-}
-
-const exhibit : IExhibition = {
-    StartDate : "9/14/2020, 6:11:46 PM"
-}
+// function processExhibition(input: IBaseExhibition) : IExhibition {
+//     return {...input, StartDate: new Date(input.StartDate)};
+// }
