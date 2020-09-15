@@ -23,7 +23,7 @@ import ArtefactsScreen from './components/Artefacts/ArtefactsScreen';
 import HomeScreen from './components/HomeScreen';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import ArtefactsContext, { artefactsContextValue } from './components/Artefacts/ArtefactsContext';
-import { IArtefact, IBaseArtefact, IBaseStoreItem } from './lib/Interfaces';
+import { IArtefact, IBaseArtefact, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
 import { artefactsURL, storeURL } from './lib/urls';
 
 import { EventStack } from './components/Events/EventStack';
@@ -31,6 +31,7 @@ import EventContext, { eventContextValue } from './components/Events/EventContex
 import { IBaseExhibition } from './lib/Interfaces';
 import { eventsURL } from './lib/urls';
 import { StoreStack } from './components/Store/StoreStack';
+import StoreContext from './components/Store/StoreContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +51,8 @@ function Tabs() {
 export default function App() {
   const [artefacts, setArtefacts] = useState<IArtefact[]>([]);
   const [events, setEvents] = useState<IBaseExhibition[]>([]);
-  const [store, setStore] = useState<IBaseStoreItem[]>([]);
+  const [storeItems, setStore] = useState<IBaseStoreItem[]>([]);
+  const [storeImages, setStoreImages] = useState<IBaseStoreItemImage[]>([]);
 
 
   async function getArtefacts(): Promise<IArtefact[]> {
@@ -71,6 +73,7 @@ export default function App() {
     try {
       const result = await fetch(eventsURL);
       json = await result.json();
+      console.log(json);
 
     } catch (error) {
       console.error("ERROR RETREIVING EVENTS");
@@ -116,7 +119,11 @@ export default function App() {
 
     <NavigationContainer>
       <ArtefactsContext.Provider value={providerValue}>
-        <Tabs />
+        <EventContext.Provider value={events}>
+          <StoreContext.Provider value={{ storeImages, storeItems }}>
+            <Tabs />
+          </StoreContext.Provider>
+        </EventContext.Provider>
       </ArtefactsContext.Provider>
     </NavigationContainer>
   );

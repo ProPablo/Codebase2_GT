@@ -1,10 +1,7 @@
 import { createContext } from "react";
 import { IBaseExhibition } from "../../lib/Interfaces";
-export interface eventContextValue {
-    events: IBaseExhibition[];
-}
 
-const EventContext = createContext<Partial<eventContextValue>>({});
+const EventContext = createContext<Partial<IBaseExhibition[]>>([]);
 EventContext.displayName = "EventContext";
 export default EventContext;
 

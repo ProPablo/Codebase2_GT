@@ -36,7 +36,7 @@ const EventsScreen: React.FC<Props> = ({ navigation }) => {
   const [ignoreCase, setignoreCase] = useState(true);
   // const [filtered, setfiltered] = useState(data);
 
-  const { events } = useContext(EventContext);
+  const events = useContext(EventContext);
 
   function actionOnRow(item: number) {
     navigation.navigate("EventDetailScreen", {

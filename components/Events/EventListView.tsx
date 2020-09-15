@@ -10,8 +10,8 @@ interface Props {
 }
 
 const ExhibitionListView = ({ exhibition }: Props) => {
-    const { events } = useContext(EventsContext);
-    console.log("Logging events", events);
+    // const { events } = useContext(EventsContext);
+    // console.log("Logging events", events);
     return (
 
         <View style={styles.listItem}>

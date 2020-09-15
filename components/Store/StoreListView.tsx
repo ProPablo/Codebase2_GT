@@ -12,7 +12,7 @@ interface Props {
 
 const StoreListView = ({ store }: Props) => {
     const { storeItems } = useContext(StoreContext);
-    console.log("Logging store", storeItems);
+    // console.log("Logging store", storeItems);
     return (
 
         <View style={styles.listItem}>
