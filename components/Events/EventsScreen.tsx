@@ -13,15 +13,15 @@ import {
   FlatList,
   StyleSheet, Pressable, Button
 } from 'react-native';
-import { ArtefactStackParams } from './ArtefactStack';
-import { IArtefact } from '../lib/Interfaces';
-import { artefactsURL } from '../lib/urls';
+import { EventStackParams } from './EventStack';
+import { IBaseExhibition } from '../../lib/Interfaces';
+import { eventsURL } from '../../lib/urls';
 import EventListView from './EventListView';
-import ArtefactsContext, { artefactsContextValue } from './ArtefactsContext';
+import EventContext, { eventContextValue } from './EventContext';
 import { Card, Icon } from 'react-native-elements';
 
 
-type NavigationProp = StackNavigationProp<ArtefactStackParams>
+type NavigationProp = StackNavigationProp<EventStackParams>
 
 // Refactor to create own Searchable List component
 
@@ -29,55 +29,54 @@ interface Props {
   navigation: NavigationProp
 }
 
-const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
+const EventsScreen: React.FC<Props> = ({ navigation }) => {
 
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
-  const [data, loaddata] = [1, 2];
-  const [filtered, setfiltered] = useState(data);
+  // const [filtered, setfiltered] = useState(data);
 
-  const {artefacts, loadArtefacts} = useContext(ArtefactsContext);
+  const { events } = useContext(EventContext);
 
   function actionOnRow(item: number) {
-    navigation.navigate("ArtefactDetails", {
-      artefactId: item
+    navigation.navigate("EventDetailScreen", {
+      eventId: item
     })
   };
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pageContainer}>
-          <View style={styles.searchInputs}>
-            <TextInput
-              style={styles.search}
-              placeholder={
-                ignoreCase
-                  ? "Search Artefacts (case insensitive)"
-                  : "Search Artefacts"
-              }
-              onChangeText={searchTerm => setsearchTerm(searchTerm)}
-            />
-            <Switch
-              style={styles.switch}
-              value={ignoreCase}
-              tintColor={"#D44744"}
-              thumbTintColor={"#D44744"}
-              onTintColor={"#f4cfce"}
-              onValueChange={ignoreCase => setignoreCase(ignoreCase)}
-            />
-          </View>
+        <View style={styles.searchInputs}>
+          <TextInput
+            style={styles.search}
+            placeholder={
+              ignoreCase
+                ? "Search Events (case insensitive)"
+                : "Search Events"
+            }
+            onChangeText={searchTerm => setsearchTerm(searchTerm)}
+          />
+          <Switch
+            style={styles.switch}
+            value={ignoreCase}
+            tintColor={"#D44744"}
+            thumbTintColor={"#D44744"}
+            onTintColor={"#f4cfce"}
+            onValueChange={ignoreCase => setignoreCase(ignoreCase)}
+          />
+        </View>
 
-          <FlatList
-            data={artefacts}
-            renderItem={({ item }) => (
-              <Pressable onPress={() => actionOnRow(item.Id)}>
-                <EventListView exhibition={item}/>
-                {/* <Text style={styles.listItem}>{item.Name}</Text> */}
-              </Pressable>
-            )}
-            keyExtractor={(item)=>item.Id.toString()}
-          ></FlatList>
+        <FlatList
+          data={events}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => actionOnRow(item.Id)}>
+              <EventListView exhibition={item} />
+              {/* <Text style={styles.listItem}>{item.Name}</Text> */}
+            </Pressable>
+          )}
+          keyExtractor={(item) => item.Id.toString()}
+        ></FlatList>
 
 
       </View>
@@ -127,4 +126,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ArtefactsScreen;
+export default EventsScreen;

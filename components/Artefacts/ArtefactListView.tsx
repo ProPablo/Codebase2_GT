@@ -16,7 +16,7 @@ const ArtefactListView = ({ artefact }: Props) => {
                 <Card.Title style={styles.text}>{artefact.Name}</Card.Title>
                 <Text style={styles.text}>{artefact.Description}</Text>
                 <Card.Divider />
-                <Card.Image source={{
+                <Card.Image style={styles.image} source={{
                     uri: "data:image/jpeg;base64," + artefact.Image,
                 }}>
 
@@ -38,19 +38,18 @@ const styles = StyleSheet.create({
     },
     
     image: {
-
+        backgroundColor:'#fff'
     },
 
     text: {
-        color:'#000',
+        color:'#fff',
         textAlign:'center',
         fontFamily:'Roboto'
     },
 
     containerStyle: {
         borderRadius: 10,
-        backgroundColor: '#C0D6DF',
-        shadowColor: '#000',
+        backgroundColor: '#A20C02',
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.8,
         shadowRadius: 5,

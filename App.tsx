@@ -26,18 +26,13 @@ import ArtefactsContext, { artefactsContextValue } from './components/Artefacts/
 import { IArtefact, IBaseArtefact } from './lib/Interfaces';
 import { artefactsURL } from './lib/urls';
 
+import { EventStack } from './components/Events/EventStack';
+import EventContext, { eventContextValue } from './components/Events/EventContext';
+import { IBaseExhibition } from './lib/Interfaces';
+import { eventsURL } from './lib/urls';
 
 
 
-class EventsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Events!</Text>
-      </View>
-    )
-  }
-}
 
 class StoreScreen extends React.Component {
   render() {
@@ -58,7 +53,7 @@ function Tabs() {
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Artefacts" component={ArtefactStack} />
-      <Tab.Screen name="Events" component={EventsScreen} />
+      <Tab.Screen name="Events" component={EventStack} />
       <Tab.Screen name="Store" component={StoreScreen} />
 
     </Tab.Navigator>
@@ -68,6 +63,7 @@ function Tabs() {
 
 export default function App() {
   const [artefacts, setArtefacts] = useState<IArtefact[]>([]);
+  const [events, setEvents] = useState<IBaseExhibition[]>([]);
 
   async function getArtefacts(): Promise<IArtefact[]> {
     let json;
@@ -82,13 +78,30 @@ export default function App() {
     return json;
   }
 
+  async function getEvents(): Promise<IBaseExhibition[]> {
+    let json;
+    try {
+      const result = await fetch(eventsURL);
+      json = await result.json();
+
+    } catch (error) {
+      console.error("ERROR RETREIVING EVENTS");
+    }
+
+    return json;
+  }
+
   const loadArtefacts = async () => {
     setArtefacts(await getArtefacts());
   }
 
+  const loadEvents = async () => {
+    setEvents(await getEvents());
+  }
+
   useEffect(() => {
     loadArtefacts();
-    console.log("Logging artefacts", artefacts);
+    loadEvents();
   }, []);
 
   const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change

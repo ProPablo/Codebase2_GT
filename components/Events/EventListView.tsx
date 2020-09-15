@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Card } from 'react-native-elements';
-import { IBaseExhibition } from '../lib/Interfaces';
+import { IBaseExhibition } from '../../lib/Interfaces';
+import EventsContext from './EventContext';
+
 
 interface Props {
     exhibition: IBaseExhibition
 }
 
 const ExhibitionListView = ({ exhibition }: Props) => {
-
+    const { events } = useContext(EventsContext);
+    console.log("Logging events", events);
     return (
 
         <View style={styles.listItem}>

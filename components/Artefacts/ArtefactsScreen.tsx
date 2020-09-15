@@ -14,8 +14,8 @@ import {
   StyleSheet, Pressable, Button
 } from 'react-native';
 import { ArtefactStackParams } from './ArtefactStack';
-import { IArtefact } from '../lib/Interfaces';
-import { artefactsURL } from '../lib/urls';
+import { IArtefact } from '../../lib/Interfaces';
+import { artefactsURL } from '../../lib/urls';
 import ArtefactListView from './ArtefactListView';
 import ArtefactsContext, { artefactsContextValue } from './ArtefactsContext';
 import { Card, Icon } from 'react-native-elements';
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   pageContainer: {
     padding: 10,
     flex: 1,
-    backgroundColor: '#f5f0f6ff',
+    backgroundColor: '#fff',
   },
   searchInputs: {
     flexDirection: "row"
