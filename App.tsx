@@ -23,28 +23,14 @@ import ArtefactsScreen from './components/Artefacts/ArtefactsScreen';
 import HomeScreen from './components/HomeScreen';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import ArtefactsContext, { artefactsContextValue } from './components/Artefacts/ArtefactsContext';
-import { IArtefact, IBaseArtefact } from './lib/Interfaces';
-import { artefactsURL } from './lib/urls';
+import { IArtefact, IBaseArtefact, IBaseStoreItem } from './lib/Interfaces';
+import { artefactsURL, storeURL } from './lib/urls';
 
 import { EventStack } from './components/Events/EventStack';
 import EventContext, { eventContextValue } from './components/Events/EventContext';
 import { IBaseExhibition } from './lib/Interfaces';
 import { eventsURL } from './lib/urls';
-
-
-
-
-class StoreScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Store!</Text>
-      </View>
-    )
-  }
-}
-
-
+import { StoreStack } from './components/Store/StoreStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +40,7 @@ function Tabs() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Artefacts" component={ArtefactStack} />
       <Tab.Screen name="Events" component={EventStack} />
-      <Tab.Screen name="Store" component={StoreScreen} />
+      <Tab.Screen name="Store" component={StoreStack} />
 
     </Tab.Navigator>
   );
@@ -64,6 +50,8 @@ function Tabs() {
 export default function App() {
   const [artefacts, setArtefacts] = useState<IArtefact[]>([]);
   const [events, setEvents] = useState<IBaseExhibition[]>([]);
+  const [store, setStore] = useState<IBaseStoreItem[]>([]);
+
 
   async function getArtefacts(): Promise<IArtefact[]> {
     let json;
@@ -91,6 +79,19 @@ export default function App() {
     return json;
   }
 
+  async function getStore(): Promise<IBaseStoreItem[]> {
+    let json;
+    try {
+      const result = await fetch(storeURL);
+      json = await result.json();
+
+    } catch (error) {
+      console.error("ERROR RETREIVING STORE ITEMS");
+    }
+
+    return json;
+  }
+
   const loadArtefacts = async () => {
     setArtefacts(await getArtefacts());
   }
@@ -99,9 +100,15 @@ export default function App() {
     setEvents(await getEvents());
   }
 
+  const loadStore = async () => {
+    setStore(await getStore());
+  }
+
+
   useEffect(() => {
     loadArtefacts();
     loadEvents();
+    loadStore();
   }, []);
 
   const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
