@@ -21,7 +21,6 @@ export async function getEvents(): Promise<IBaseExhibition[]> {
     try {
       const result = await fetch(eventsURL);
       json = await result.json();
-      console.log(json);
 
     } catch (error) {
       console.error("ERROR RETREIVING EVENTS");

@@ -93,10 +93,10 @@ export default function App() {
 
     requestLocationPermission()
       .then(() => {
-        manager.current = new BleManager();
-        manager.current?.startDeviceScan(null, null, (error, device) => {
-          console.log({ device });
-        });
+        // manager.current = new BleManager();
+        // manager.current?.startDeviceScan(null, null, (error, device) => {
+        //   console.log({ device });
+        // });
 
         // const subscription = manager.current.onStateChange((state => {
         //   console.log("BLE Manager online");

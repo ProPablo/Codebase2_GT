@@ -34,9 +34,10 @@ const StoreScreen: React.FC<Props> = ({ navigation }) => {
   const [searchTerm, setsearchTerm] = useState("");
   const [searchAttribute, setsearchAttribute] = useState("");
   const [ignoreCase, setignoreCase] = useState(true);
-  // const [filtered, setfiltered] = useState(data);
-
   const { storeItems } = useContext(StoreContext);
+  const [filtered, setfiltered] = useState(storeItems);
+
+  
 
   function actionOnRow(item: number) {
     navigation.navigate("StoreDetailScreen", {
@@ -44,26 +45,24 @@ const StoreScreen: React.FC<Props> = ({ navigation }) => {
     })
   };
 
+  function filterData() {
+    console.log("Filteering data");
+    const reg = RegExp(searchTerm, 'gi' );
+    setfiltered(storeItems?.filter((item)=> (item.Name + item.Description + item.Cost).match(reg)));
+  }
+
+  useEffect(()=> {
+    filterData();
+  }, [storeItems, searchTerm]);
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pageContainer}>
         <View style={styles.searchInputs}>
           <TextInput
             style={styles.search}
-            placeholder={
-              ignoreCase
-                ? "Search Merchandise (case insensitive)"
-                : "Search Merchandise"
-            }
+            placeholder={ "Search Merchandise"}
             onChangeText={searchTerm => setsearchTerm(searchTerm)}
-          />
-          <Switch
-            style={styles.switch}
-            value={ignoreCase}
-            tintColor={"#D44744"}
-            thumbTintColor={"#D44744"}
-            onTintColor={"#f4cfce"}
-            onValueChange={ignoreCase => setignoreCase(ignoreCase)}
           />
         </View>
 

@@ -32,12 +32,9 @@ interface Props {
 const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
 
   const [searchTerm, setsearchTerm] = useState("");
-  const [searchAttribute, setsearchAttribute] = useState("");
-  const [ignoreCase, setignoreCase] = useState(true);
-  const [data, loaddata] = [1, 2];
-  const [filtered, setfiltered] = useState(data);
-
+  // const [searchAttribute, setsearchAttribute] = useState("");
   const {artefacts, loadArtefacts} = useContext(ArtefactsContext);
+  const [filtered, setfiltered] = useState(artefacts);
 
   function actionOnRow(item: number) {
     navigation.navigate("ArtefactDetails", {
@@ -45,31 +42,29 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
     })
   };
 
+  function filterData() {
+    console.log("Filteering data");
+    const reg = RegExp(searchTerm, 'gi' );
+    setfiltered(artefacts?.filter((item)=> (item.Category + item.AdditionalComments + item.Description + item.Name).match(reg)));
+  }
+
+  useEffect(()=> {
+    filterData();
+  }, [artefacts, searchTerm]);
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pageContainer}>
           <View style={styles.searchInputs}>
             <TextInput
               style={styles.search}
-              placeholder={
-                ignoreCase
-                  ? "Search Artefacts (case insensitive)"
-                  : "Search Artefacts"
-              }
+              placeholder={"Search Artefacts"}
               onChangeText={searchTerm => setsearchTerm(searchTerm)}
-            />
-            <Switch
-              style={styles.switch}
-              value={ignoreCase}
-              tintColor={"#D44744"}
-              thumbTintColor={"#D44744"}
-              onTintColor={"#f4cfce"}
-              onValueChange={ignoreCase => setignoreCase(ignoreCase)}
             />
           </View>
 
           <FlatList
-            data={artefacts}
+            data={filtered}
             renderItem={({ item }) => (
               <Pressable onPress={() => actionOnRow(item.Id)}>
                 <ArtefactListView artefact={item}/>
