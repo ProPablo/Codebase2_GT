@@ -17,7 +17,7 @@ import { EventStackParams } from './EventStack';
 import { IBaseExhibition } from '../../lib/Interfaces';
 import { eventsURL } from '../../lib/urls';
 import EventListView from './EventListView';
-import EventContext, { eventContextValue } from './EventContext';
+import EventContext from './EventContext';
 import { Card, Icon } from 'react-native-elements';
 
 
