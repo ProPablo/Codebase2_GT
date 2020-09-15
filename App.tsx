@@ -24,14 +24,14 @@ import HomeScreen from './components/HomeScreen';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import ArtefactsContext, { artefactsContextValue } from './components/Artefacts/ArtefactsContext';
 import { IArtefact, IBaseArtefact, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
-import { artefactsURL, storeURL } from './lib/urls';
 
 import { EventStack } from './components/Events/EventStack';
 import EventContext from './components/Events/EventContext';
 import { IBaseExhibition } from './lib/Interfaces';
-import { eventsURL } from './lib/urls';
 import { StoreStack } from './components/Store/StoreStack';
 import StoreContext from './components/Store/StoreContext';
+
+import { getArtefacts, getEvents, getStore } from './lib/Controllers'
 
 const Tab = createBottomTabNavigator();
 
@@ -53,47 +53,6 @@ export default function App() {
   const [events, setEvents] = useState<IBaseExhibition[]>([]);
   const [storeItems, setStore] = useState<IBaseStoreItem[]>([]);
   const [storeImages, setStoreImages] = useState<IBaseStoreItemImage[]>([]);
-
-
-  async function getArtefacts(): Promise<IArtefact[]> {
-    let json;
-    try {
-      const result = await fetch(artefactsURL);
-      json = await result.json();
-
-    } catch (error) {
-      console.error("ERROR RETREIVING ARTEFACTS");
-    }
-
-    return json;
-  }
-
-  async function getEvents(): Promise<IBaseExhibition[]> {
-    let json;
-    try {
-      const result = await fetch(eventsURL);
-      json = await result.json();
-      console.log(json);
-
-    } catch (error) {
-      console.error("ERROR RETREIVING EVENTS");
-    }
-
-    return json;
-  }
-
-  async function getStore(): Promise<IBaseStoreItem[]> {
-    let json;
-    try {
-      const result = await fetch(storeURL);
-      json = await result.json();
-
-    } catch (error) {
-      console.error("ERROR RETREIVING STORE ITEMS");
-    }
-
-    return json;
-  }
 
   const loadArtefacts = async () => {
     setArtefacts(await getArtefacts());
