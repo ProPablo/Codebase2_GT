@@ -60,4 +60,5 @@ buck-out/
 
 
 .env*
+env.js
 .history

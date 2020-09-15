@@ -19,10 +19,10 @@ import {
 } from 'react-native';
 
 
-import ArtefactsScreen from './components/ArtefactsScreen';
+import ArtefactsScreen from './components/Artefacts/ArtefactsScreen';
 import HomeScreen from './components/HomeScreen';
-import { ArtefactStack } from './components/ArtefactStack';
-import ArtefactsContext, { artefactsContextValue } from './components/ArtefactsContext';
+import { ArtefactStack } from './components/Artefacts/ArtefactStack';
+import ArtefactsContext, { artefactsContextValue } from './components/Artefacts/ArtefactsContext';
 import { IArtefact, IBaseArtefact } from './lib/Interfaces';
 import { artefactsURL } from './lib/urls';
 
