@@ -20,11 +20,8 @@ interface Props {
 const EventDetailScreen: React.FC<Props> = ({ route }) => {
 
     const { eventId } = route.params;
-    const { events } = useContext(EventsContext);
-    if (!events) {
-        return (<Text>Get stick bugged lol</Text>)
-    }
-    const event = events.find((item) => item.Id === eventId);
+    const events = useContext(EventsContext);
+    const event = events?.find((item) => item.Id === eventId);
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Event Details!</Text>

@@ -27,7 +27,7 @@ import { IArtefact, IBaseArtefact, IBaseStoreItem, IBaseStoreItemImage } from '.
 import { artefactsURL, storeURL } from './lib/urls';
 
 import { EventStack } from './components/Events/EventStack';
-import EventContext, { eventContextValue } from './components/Events/EventContext';
+import EventContext from './components/Events/EventContext';
 import { IBaseExhibition } from './lib/Interfaces';
 import { eventsURL } from './lib/urls';
 import { StoreStack } from './components/Store/StoreStack';
