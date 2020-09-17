@@ -15,6 +15,7 @@ import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
 import { getArtefacts, getEvents, getStore } from './lib/Controllers';
 import { IArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
+import { NavigationTheme } from './lib/Styles';
 import { artefactsURL } from './lib/urls';
 
 // const allPerms = [PermissionsAndroid.PERMISSIONS.BLUETOOTH, PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN, PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION];
@@ -42,16 +43,6 @@ const requestLocationPermission = async () => {
     console.warn(err);
     return false;
   }
-};
-
-const MyTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#A20C02',
-    card: '#F2E3A6',
-    text: '#000'
-  },
 };
 
 const styles = StyleSheet.create({
@@ -136,7 +127,7 @@ export default function App() {
   const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
   return (
 
-    <NavigationContainer theme={MyTheme}>
+    <NavigationContainer theme={NavigationTheme}>
       <ArtefactsContext.Provider value={providerValue}>
         <EventContext.Provider value={events}>
           <StoreContext.Provider value={{ storeImages, storeItems }}>
