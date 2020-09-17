@@ -47,7 +47,7 @@ const EventsScreen: React.FC<Props> = ({ navigation }) => {
   function filterData() {
     console.log("Filteering data");
     const reg = RegExp(searchTerm, 'gi' );
-    setfiltered(events?.filter((item)=> (item.Name + item.Organiser + item?.Description).match(reg)));
+    setfiltered(events.filter((item)=> (item.Name + item.Organiser + item.Description).match(reg)));
   }
 
   useEffect(()=> {
