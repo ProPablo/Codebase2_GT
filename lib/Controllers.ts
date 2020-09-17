@@ -56,6 +56,10 @@ export function processArtefacts(item: IBaseArtefact): IArtefact {
     case ".jpeg":
       URI = URI.concat("jpeg;base64," + item.Image);
       break;
+    case ".png":
+      URI = URI.concat("png;base64," + item.Image);
+    case ".gif":
+      URI = URI.concat("gif;base64," + item.Image);
     default:
       URI = "https://i.kym-cdn.com/entries/icons/mobile/000/034/800/Get_Stick_Bugged_Banner.jpg";
       break;

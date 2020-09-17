@@ -35,8 +35,8 @@ export interface IBaseArtefact {
     Coord_Y: number,
     Activation: boolean,
     Status: ArtefactStatus | number,
-    Zone: IBaseCategoryZone | any,
-    Category: IBaseCategoryZone | any
+    Zone: ICategoryZone | any,
+    Category: ICategoryZone | any
 }
 // [
 //     {
@@ -88,7 +88,9 @@ export interface IBaseExhibition {
 }
 
 export interface IExhibition extends IBaseExhibition {
-    StartDate : Date
+    StartDate : Date,
+    FinishDate : Date,
+    URI : string
 }
 
 export interface IBaseStoreItem {
@@ -100,13 +102,15 @@ export interface IBaseStoreItem {
     StoreItemImages: IBaseStoreItemImage[]
 }
 
-
 export interface IBaseStoreItemImage {
     Id: number,
     Image: string | Image,
     ImageFileType: string,
-    FileType: string,
     StoreItem: IBaseStoreItem
+}
+
+export interface IStoreItemImage extends IBaseStoreItemImage {
+    URI: string
 }
 
 export interface IBaseTour {
