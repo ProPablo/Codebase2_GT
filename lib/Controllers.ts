@@ -42,6 +42,25 @@ export async function getStore(): Promise<IBaseStoreItem[]> {
   return json;
 }
 
+// helper function?
+export function imageChecker ( ImageFileType: string, Image: string ) {
+  let URI = "data:image/"
+
+  switch (ImageFileType) {
+    case ".jpeg":
+      URI = URI.concat("jpeg;base64," + Image);
+      break;
+    case ".png":
+      URI = URI.concat("png;base64," + Image);
+    case ".gif":
+      URI = URI.concat("gif;base64," + Image);
+    default:
+      URI = "https://i.kym-cdn.com/entries/icons/mobile/000/034/800/Get_Stick_Bugged_Banner.jpg";
+      break;
+  }
+  return URI;
+} 
+
 export function processArtefacts(item: IBaseArtefact): IArtefact {
   item.AcquisitionDate = new Date(item.AcquisitionDate);
   item.Zone = <ICategoryZone>item.Zone;
@@ -50,20 +69,7 @@ export function processArtefacts(item: IBaseArtefact): IArtefact {
   //  const bob = (item.Status===ArtefactStatus.InStorage) ? "gay" : "homosecual"
 
 
-  let URI = "data:image/"
-
-  switch (item.ImageFileType) {
-    case ".jpeg":
-      URI = URI.concat("jpeg;base64," + item.Image);
-      break;
-    case ".png":
-      URI = URI.concat("png;base64," + item.Image);
-    case ".gif":
-      URI = URI.concat("gif;base64," + item.Image);
-    default:
-      URI = "https://i.kym-cdn.com/entries/icons/mobile/000/034/800/Get_Stick_Bugged_Banner.jpg";
-      break;
-  }
+  let URI = imageChecker(item.ImageFileType, item.Image);
 
   const artefact: IArtefact = {
     URI,
