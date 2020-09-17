@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  PermissionsAndroid
+  PermissionsAndroid, StyleSheet
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import 'react-native-gesture-handler';
@@ -44,6 +44,24 @@ const requestLocationPermission = async () => {
   }
 };
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#A20C02',
+    card: '#F2E3A6',
+    text: '#000'
+  },
+};
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 24,
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'Roboto'
+  }
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -58,6 +76,7 @@ function Tabs() {
     </Tab.Navigator>
   );
 }
+
 
 
 export default function App() {
@@ -117,7 +136,7 @@ export default function App() {
   const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
   return (
 
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <ArtefactsContext.Provider value={providerValue}>
         <EventContext.Provider value={events}>
           <StoreContext.Provider value={{ storeImages, storeItems }}>
@@ -127,4 +146,5 @@ export default function App() {
       </ArtefactsContext.Provider>
     </NavigationContainer>
   );
+
 }
