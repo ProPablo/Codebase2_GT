@@ -1,11 +1,13 @@
-enum ArtefactStatus {
+import { Image } from "react-native";
+
+export enum ArtefactStatus {
     OnDisplay = 0,
     InStorage,
     InTransit, 
     Restoration
 }
 
-export interface IBaseCategoryZone {
+export interface ICategoryZone {
     Id: number,
     Name: string
 }
@@ -32,7 +34,7 @@ export interface IBaseArtefact {
     Coord_X: number,
     Coord_Y: number,
     Activation: boolean,
-    Status: ArtefactStatus | any,
+    Status: ArtefactStatus | number,
     Zone: IBaseCategoryZone | any,
     Category: IBaseCategoryZone | any
 }
@@ -65,7 +67,11 @@ export interface IBaseArtefact {
 //   ]
 
 export interface IArtefact extends IBaseArtefact {
-    // Zone : IBaseCategoryZone | null
+    Status : ArtefactStatus,
+    URI : string
+
+    //https://stackoverflow.com/questions/51804810/how-to-remove-fields-from-a-typescript-interface-via-extension/51804844
+    //delete ImagefileType
 }
 
 export interface IBaseExhibition {
@@ -94,9 +100,10 @@ export interface IBaseStoreItem {
     StoreItemImages: IBaseStoreItemImage[]
 }
 
+
 export interface IBaseStoreItemImage {
     Id: number,
-    Image: string,
+    Image: string | Image,
     ImageFileType: string,
     FileType: string,
     StoreItem: IBaseStoreItem

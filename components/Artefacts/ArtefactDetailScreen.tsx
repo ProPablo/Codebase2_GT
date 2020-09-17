@@ -21,11 +21,8 @@ const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
 
     const { artefactId } = route.params;
     const { artefacts } = useContext(ArtefactsContext);
-    if (!artefacts) {
-        return (<Text>Get stick bugged lol</Text>)
-    }
     //console.log("artefacts from deatil scrren", artefacts);
-    const artefact = artefacts.find((item) => item.Id === artefactId);
+    const artefact = artefacts?.find((item) => item.Id === artefactId);
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Artefact Details!</Text>
