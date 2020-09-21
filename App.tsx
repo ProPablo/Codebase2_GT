@@ -106,26 +106,26 @@ export default function App() {
     loadEvents();
     loadStore();
 
-    requestLocationPermission()
-      .then(() => {
-        manager.current = new BleManager();
-        manager.current?.startDeviceScan(null, null, (error, device) => {
-          console.log({ device });
-        });
+    // requestLocationPermission()
+    //   .then(() => {
+    //     manager.current = new BleManager();
+    //     manager.current?.startDeviceScan(null, null, (error, device) => {
+    //       console.log({ device });
+    //     });
 
-        const subscription = manager.current.onStateChange((state => {
-          console.log("BLE Manager online");
-          if (state === 'PoweredOn') {
-            console.log("Starting scanning");
-            scanAndConnect();
-            subscription.remove();
-          }
-        }));
-      })
-    return () => {
-      // manager.current?.stopDeviceScan();
-      // manager.current?.destroy();
-    }
+    //     const subscription = manager.current.onStateChange((state => {
+    //       console.log("BLE Manager online");
+    //       if (state === 'PoweredOn') {
+    //         // console.log("Starting scanning");
+    //         scanAndConnect();
+    //         subscription.remove();
+    //       }
+    //     }));
+    //   })
+    // return () => {
+    //   // manager.current?.stopDeviceScan();
+    //   // manager.current?.destroy();
+    // }
 
   }, []);
 

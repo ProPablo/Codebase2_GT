@@ -70,7 +70,6 @@ export const ListViewStyles = StyleSheet.create({
     },
 
     image: {
-        backgroundColor: '#fff'
     },
 
     text: {

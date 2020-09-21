@@ -59,7 +59,7 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
           <View style={ScreenStyles.searchInputs}>
             <TextInput
               style={ScreenStyles.search}
-              placeholder={"Search Artefacts"}
+              placeholder={"Search " + artefacts?.length + " Artefacts"}
               onChangeText={searchTerm => setsearchTerm(searchTerm)}
             />
           </View>

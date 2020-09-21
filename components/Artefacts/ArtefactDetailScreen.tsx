@@ -31,7 +31,7 @@ const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
                 <View>
                     <Text> {artefact.Name}</Text>
                     <Image source={{
-                        uri: "data:image/jpeg;base64," + artefact.Image, 
+                        uri: artefact.URI, 
                     }} style={styles.image} />
                 </View>
             }
