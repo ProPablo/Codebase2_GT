@@ -18,7 +18,7 @@ const ArtefactListView = ({ artefact }: Props) => {
                 <Text style={ListViewStyles.text}>{artefact.Description}</Text>
                 <Card.Divider />
                 <Card.Image style={ListViewStyles.image} source={{
-                    uri: "data:image/jpeg;base64," + artefact.Image,
+                    uri: artefact.URI,
                 }}/>
 
             </Card>

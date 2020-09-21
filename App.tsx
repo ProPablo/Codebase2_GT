@@ -13,8 +13,8 @@ import { EventStack } from './components/Events/EventStack';
 import HomeScreen from './components/HomeScreen';
 import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
-import { getArtefacts, getEvents, getStore } from './lib/Controllers';
-import { IArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
+import { getArtefacts, getEvents, getStore, processArtefact } from './lib/Controllers';
+import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
 import { NavigationTheme } from './lib/Styles';
 import { artefactsURL } from './lib/urls';
 
@@ -79,7 +79,12 @@ export default function App() {
   const manager = useRef<BleManager | null>(null);
 
   const loadArtefacts = async () => {
-    setArtefacts(await getArtefacts());
+    const baseArtefacts: IBaseArtefact[] = await getArtefacts();
+    const artefacts: IArtefact[] = [];
+    baseArtefacts.forEach((baseArtefact) => {
+      artefacts.push(processArtefact(baseArtefact));
+    })
+    setArtefacts(artefacts);
   }
 
   const loadEvents = async () => {

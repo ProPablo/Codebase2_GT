@@ -61,7 +61,7 @@ export function imageChecker ( ImageFileType: string, Image: string ) {
   return URI;
 } 
 
-export function processArtefacts(item: IBaseArtefact): IArtefact {
+export function processArtefact(item: IBaseArtefact): IArtefact {
   item.AcquisitionDate = new Date(item.AcquisitionDate);
   item.Zone = <ICategoryZone>item.Zone;
   //  const status : ArtefactStatus = item.Status;
@@ -81,7 +81,7 @@ export function processArtefacts(item: IBaseArtefact): IArtefact {
   // return<IArtefact>item;
 }
 
-export function processEvents(item: IBaseExhibition): IExhibition {
+export function processEvent(item: IBaseExhibition): IExhibition {
   item.StartDate = new Date(item.StartDate);
   item.FinishDate = new Date(item.FinishDate);
   let URI = imageChecker(item.ImageFileType, item.Image);
@@ -94,7 +94,7 @@ export function processEvents(item: IBaseExhibition): IExhibition {
   return event;
 }
 
-export function processStoreItemImages(item: IBaseStoreItemImage): IStoreItemImage {
+export function processStoreItemImage(item: IBaseStoreItemImage): IStoreItemImage {
   let URI = imageChecker(item.ImageFileType, item.Image);
 
   const storeItemImage: IStoreItemImage = {
