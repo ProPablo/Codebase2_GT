@@ -1,4 +1,4 @@
-import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus } from './Interfaces';
+import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus, IExhibition, IBaseStoreItemImage, IStoreItemImage } from './Interfaces';
 import { artefactsURL, eventsURL, storeURL } from './urls';
 import testjson from '../test.json';
 
@@ -62,7 +62,7 @@ export function imageChecker ( ImageFileType: string, Image: string ) {
   return URI;
 } 
 
-export function processArtefacts(item: IBaseArtefact): IArtefact {
+export function processArtefact(item: IBaseArtefact): IArtefact {
   item.AcquisitionDate = new Date(item.AcquisitionDate);
   item.Zone = <ICategoryZone>item.Zone;
   //  const status : ArtefactStatus = item.Status;
@@ -80,4 +80,28 @@ export function processArtefacts(item: IBaseArtefact): IArtefact {
   return artefact;
   // Typecasting
   // return<IArtefact>item;
+}
+
+export function processEvent(item: IBaseExhibition): IExhibition {
+  item.StartDate = new Date(item.StartDate);
+  item.FinishDate = new Date(item.FinishDate);
+  let URI = imageChecker(item.ImageFileType, item.Image);
+
+  const event: IExhibition = {
+    URI,
+    ...item
+  }
+  
+  return event;
+}
+
+export function processStoreItemImage(item: IBaseStoreItemImage): IStoreItemImage {
+  let URI = imageChecker(item.ImageFileType, item.Image);
+
+  const storeItemImage: IStoreItemImage = {
+    URI,
+    ...item
+  }
+  
+  return storeItemImage;
 }
