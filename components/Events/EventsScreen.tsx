@@ -48,7 +48,7 @@ const EventsScreen: React.FC<Props> = ({ navigation }) => {
   function filterData() {
     console.log("Filteering data");
     const reg = RegExp(searchTerm, 'gi' );
-    setfiltered(events.filter((item)=> (item.Name + item.Organiser + item.Description).match(reg)));
+    setfiltered(events?.filter((item)=> (item.Name + item.Organiser + item.Description).match(reg)));
   }
 
   useEffect(()=> {
@@ -68,7 +68,7 @@ const EventsScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         <FlatList
-          data={events}
+          data={filtered}
           renderItem={({ item }) => (
             <Pressable onPress={() => actionOnRow(item.Id)}>
               <EventListView exhibition={item} />

@@ -68,7 +68,7 @@ const StoreScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         <FlatList
-          data={storeItems}
+          data={filtered}
           renderItem={({ item }) => (
             <Pressable onPress={() => actionOnRow(item.Id)}>
               <StoreListView store={item} />
