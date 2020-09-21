@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-//import { SearchableFlatList } from "react-native-searchable-list";
+import Carousel from 'react-native-carousel';
 
 import {
   ScrollView,
@@ -59,14 +59,14 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
           <View style={ScreenStyles.searchInputs}>
             <TextInput
               style={ScreenStyles.search}
-              placeholder={"Search " + artefacts?.length + " Artefacts"}
+              placeholder={`Search ${artefacts?.length} Artefacts`}
               onChangeText={searchTerm => setsearchTerm(searchTerm)}
             />
           </View>
 
           <FlatList
             data={filtered}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <Pressable onPress={() => actionOnRow(item.Id)}>
                 <ArtefactListView artefact={item}/>
                 {/* <Text style={styles.listItem}>{item.Name}</Text> */}
@@ -74,8 +74,6 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
             )}
             keyExtractor={(item)=>item.Id.toString()}
           ></FlatList>
-
-
       </View>
     </View>
   );

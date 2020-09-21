@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import 'react-native-gesture-handler';
+import { event } from 'react-native-reanimated';
 import ArtefactsContext from './components/Artefacts/ArtefactsContext';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import EventContext from './components/Events/EventContext';
@@ -13,8 +14,8 @@ import { EventStack } from './components/Events/EventStack';
 import HomeScreen from './components/HomeScreen';
 import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
-import { getArtefacts, getEvents, getStore, processArtefact } from './lib/Controllers';
-import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage } from './lib/Interfaces';
+import { getArtefacts, getEvents, getStore, processArtefact, processEvent } from './lib/Controllers';
+import { IArtefact, IArtefactInfoImage, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage, IExhibition } from './lib/Interfaces';
 import { NavigationTheme } from './lib/Styles';
 import { artefactsURL } from './lib/urls';
 
@@ -72,7 +73,7 @@ function Tabs() {
 
 export default function App() {
   const [artefacts, setArtefacts] = useState<IArtefact[]>([]);
-  const [events, setEvents] = useState<IBaseExhibition[]>([]);
+  const [events, setEvents] = useState<IExhibition[]>([]);
   const [storeItems, setStore] = useState<IBaseStoreItem[]>([]);
   const [storeImages, setStoreImages] = useState<IBaseStoreItemImage[]>([]);
 
@@ -88,7 +89,12 @@ export default function App() {
   }
 
   const loadEvents = async () => {
-    setEvents(await getEvents());
+    const baseEvents: IBaseExhibition[] = await getEvents();
+    const events: IExhibition[] = [];
+    baseEvents.forEach((baseEvents) => {
+      events.push(processEvent(baseEvents));
+    })
+    setEvents(events);
   }
 
   const loadStore = async () => {

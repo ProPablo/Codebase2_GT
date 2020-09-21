@@ -1,4 +1,4 @@
-import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus, IExhibition, IBaseStoreItemImage, IStoreItemImage } from './Interfaces';
+import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus, IExhibition, IBaseStoreItemImage, IStoreItemImage, IArtefactInfo, IArtefactInfoFile } from './Interfaces';
 import { artefactsURL, eventsURL, storeURL } from './urls';
 import testjson from '../test.json';
 
@@ -16,7 +16,7 @@ export async function getArtefacts(): Promise<IArtefact[]> {
 }
 
 
-export async function getEvents(): Promise<IBaseExhibition[]> {
+export async function getEvents(): Promise<IExhibition[]> {
   let json;
   try {
     const result = await fetch(eventsURL);
@@ -67,24 +67,39 @@ export function imageChecker(ImageFileType: string, Image: string) {
   return URI;
 }
 
+export function processArtefactInfo(item: IArtefactInfo): IArtefactInfoFile {
+  let URI = "";
+  
+  if (item.ArtefactInfoType !== 0) {
+    URI = imageChecker(item.FileExtension, item.File);
+  }
+  
+  const artefactInfoFile: IArtefactInfoFile = {
+    URI,
+    ...item
+  }
+
+  return artefactInfoFile;
+}
+
 export function processArtefact(item: IBaseArtefact): IArtefact {
   item.AcquisitionDate = new Date(item.AcquisitionDate);
   item.Zone = <ICategoryZone>item.Zone;
   //  const status : ArtefactStatus = item.Status;
   item.Status = <ArtefactStatus>item.Status;
-  //  const bob = (item.Status===ArtefactStatus.InStorage) ? "gay" : "homosecual"
 
   let URI = imageChecker(item.ImageFileType, item.Image);
-  // console.log(URI.slice(0, 50));
+  let artInfos = new Array();
+  item.Infos.forEach(info => {
+    artInfos.push(processArtefactInfo(info));
+  });
 
   const artefact: IArtefact = {
     URI,
-    ...item
+    ...item,
+    Infos: artInfos
   }
-  //delete item.ImageFileType
   return artefact;
-  // Typecasting
-  // return<IArtefact>item;
 }
 
 export function processEvent(item: IBaseExhibition): IExhibition {
@@ -99,6 +114,8 @@ export function processEvent(item: IBaseExhibition): IExhibition {
 
   return event;
 }
+
+
 
 export function processStoreItemImage(item: IBaseStoreItemImage): IStoreItemImage {
   let URI = imageChecker(item.ImageFileType, item.Image);

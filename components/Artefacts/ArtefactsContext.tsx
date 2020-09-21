@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IArtefact, IBaseArtefact } from "../../lib/Interfaces";
+import { IArtefact, IArtefactInfoImage, IBaseArtefact } from "../../lib/Interfaces";
 export interface artefactsContextValue {
     artefacts: IArtefact[];
     loadArtefacts(): Promise<void>;

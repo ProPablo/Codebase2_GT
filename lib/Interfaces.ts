@@ -12,7 +12,7 @@ export interface ICategoryZone {
     Name: string
 }
 
-export interface IBaseArtefactInfo {
+export interface IArtefactInfo {
     Id: number, 
     Description: string,
     File: string,
@@ -20,6 +20,10 @@ export interface IBaseArtefactInfo {
     ArtefactInfoType: number, // 0, 1, 2, 3 (Text, Image, Video, Audio)
     Content: string,
     Artefact: IBaseArtefact
+}
+
+export interface IArtefactInfoFile extends IArtefactInfo {
+    URI: string, 
 }
 
 export interface IBaseArtefact {
@@ -36,7 +40,8 @@ export interface IBaseArtefact {
     Activation: boolean,
     Status: ArtefactStatus | number,
     Zone: ICategoryZone | any,
-    Category: ICategoryZone | any
+    Category: ICategoryZone | any,
+    Infos: IArtefactInfo[]
 }
 // [
 //     {
@@ -68,10 +73,16 @@ export interface IBaseArtefact {
 
 export interface IArtefact extends IBaseArtefact {
     Status : ArtefactStatus,
+    Infos : IArtefactInfo[],
     URI : string
 
     //https://stackoverflow.com/questions/51804810/how-to-remove-fields-from-a-typescript-interface-via-extension/51804844
     //delete ImagefileType
+}
+
+export interface IArtefactSimple extends IBaseArtefact {
+    Id: number,
+    Name: string,
 }
 
 export interface IBaseExhibition {
