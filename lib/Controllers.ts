@@ -1,12 +1,13 @@
 import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus } from './Interfaces';
 import { artefactsURL, eventsURL, storeURL } from './urls';
+import testjson from '../test.json';
 
 export async function getArtefacts(): Promise<IArtefact[]> {
   let json;
   try {
-    const result = await fetch(artefactsURL);
-    json = await result.json();
-
+    // const result = await fetch(artefactsURL);
+    // json = await result.json();
+    json = testjson; 
   } catch (error) {
     console.error("ERROR RETREIVING ARTEFACTS");
   }

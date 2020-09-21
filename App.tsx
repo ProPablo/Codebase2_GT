@@ -124,11 +124,11 @@ export default function App() {
 
   }, []);
 
-  const providerValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
+  const artefactsProviderValue = useMemo(() => ({ artefacts, loadArtefacts }), [artefacts, loadArtefacts]); //Only recomputes as object when logintoken or setLogintoken change
   return (
 
     <NavigationContainer theme={NavigationTheme}>
-      <ArtefactsContext.Provider value={providerValue}>
+      <ArtefactsContext.Provider value={artefactsProviderValue}>
         <EventContext.Provider value={events}>
           <StoreContext.Provider value={{ storeImages, storeItems }}>
             <Tabs />
