@@ -28,6 +28,7 @@ const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <CustomCarousel
                 artefactInfos={artefact?.Infos}
+                artefactName={artefact?.Name}
             />
 
             <Text>Artefact Details!</Text>

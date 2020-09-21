@@ -7,7 +7,8 @@ import Carousel from "react-native-snap-carousel";
 import { IArtefact, IArtefactInfo, IArtefactInfoFile, IBaseArtefact } from "../../lib/Interfaces";
 
 interface Props {
-    artefactInfos: IArtefactInfo[],
+    artefactInfos: IArtefactInfo[] | any,
+    artefactName: string | any,
 }
 
 interface CustomCarouselProps { }
@@ -18,11 +19,9 @@ interface RenderItemProps {
 
 
 
-export const CustomCarousel: React.FC<Props> = ({artefactInfos}) => {
+export const CustomCarousel: React.FC<Props> = ({artefactInfos, artefactName}) => {
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const ref = useRef(null);
-
-
 
     const renderItem = useCallback(({ index, item }: RenderItemProps) => {
         return (
@@ -37,7 +36,7 @@ export const CustomCarousel: React.FC<Props> = ({artefactInfos}) => {
                 }}
             >
                 <Text style={{ fontSize: 30 }}>{artefactInfos}</Text>
-                <Text>{}</Text>
+                <Text>{artefactName}</Text>
             </View>
         );
     }, []);
