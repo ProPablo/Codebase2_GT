@@ -88,8 +88,6 @@ export interface IBaseExhibition {
 }
 
 export interface IExhibition extends IBaseExhibition {
-    StartDate : Date,
-    FinishDate : Date,
     URI : string
 }
 
@@ -104,7 +102,7 @@ export interface IBaseStoreItem {
 
 export interface IBaseStoreItemImage {
     Id: number,
-    Image: string | Image,
+    Image: string,
     ImageFileType: string,
     StoreItem: IBaseStoreItem
 }

@@ -1,4 +1,4 @@
-import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus } from './Interfaces';
+import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, ICategoryZone, ArtefactStatus, IExhibition, IBaseStoreItemImage, IStoreItemImage } from './Interfaces';
 import { artefactsURL, eventsURL, storeURL } from './urls';
 
 export async function getArtefacts(): Promise<IArtefact[]> {
@@ -79,4 +79,28 @@ export function processArtefacts(item: IBaseArtefact): IArtefact {
   return artefact;
   // Typecasting
   // return<IArtefact>item;
+}
+
+export function processEvents(item: IBaseExhibition): IExhibition {
+  item.StartDate = new Date(item.StartDate);
+  item.FinishDate = new Date(item.FinishDate);
+  let URI = imageChecker(item.ImageFileType, item.Image);
+
+  const event: IExhibition = {
+    URI,
+    ...item
+  }
+  
+  return event;
+}
+
+export function processStoreItemImages(item: IBaseStoreItemImage): IStoreItemImage {
+  let URI = imageChecker(item.ImageFileType, item.Image);
+
+  const storeItemImage: IStoreItemImage = {
+    URI,
+    ...item
+  }
+  
+  return storeItemImage;
 }
