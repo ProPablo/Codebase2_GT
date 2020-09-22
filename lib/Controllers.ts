@@ -85,19 +85,19 @@ export function processArtefactInfo(item: IArtefactInfo): IArtefactInfoFile {
 export function processArtefact(item: IBaseArtefact): IArtefact {
   item.AcquisitionDate = new Date(item.AcquisitionDate);
   item.Zone = <ICategoryZone>item.Zone;
-  //  const status : ArtefactStatus = item.Status;
-  item.Status = <ArtefactStatus>item.Status;
+  item.ArtefactStatus = <ArtefactStatus>item.ArtefactStatus;
 
   let URI = imageChecker(item.ImageFileType, item.Image);
   let artInfos = new Array();
-  item.Infos.forEach(info => {
+  item.ArtefactInfos.forEach(info => {
     artInfos.push(processArtefactInfo(info));
   });
 
   const artefact: IArtefact = {
     URI,
+    Infos: artInfos,
+    Status: item.ArtefactStatus,
     ...item,
-    Infos: artInfos
   }
   return artefact;
 }

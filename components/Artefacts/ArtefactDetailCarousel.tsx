@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useContext } from "react";
 import { RouteProp } from '@react-navigation/native';
 import { ArtefactStackParams } from './ArtefactStack';
-import { Text, View, SafeAreaView } from "react-native";
+import { Text, View, SafeAreaView, Image } from "react-native";
 import ArtefactsContext from './ArtefactsContext';
 import Carousel from "react-native-snap-carousel";
 import { IArtefact, IArtefactInfo, IArtefactInfoFile, IBaseArtefact } from "../../lib/Interfaces";
@@ -9,21 +9,16 @@ import { IArtefact, IArtefactInfo, IArtefactInfoFile, IBaseArtefact } from "../.
 interface Props {
     artefactInfos: IArtefactInfo[] | any,
     artefactName: string | any,
-}
-
-interface CustomCarouselProps { }
-interface RenderItemProps {
-    item: IBaseArtefact;
-    index: number;
+    index: number,
 }
 
 
 
-export const CustomCarousel: React.FC<Props> = ({artefactInfos, artefactName}) => {
+export const CustomCarousel: React.FC<Props> = ({artefactInfos, artefactName, index}) => {
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const ref = useRef(null);
 
-    const renderItem = useCallback(({ index, item }: RenderItemProps) => {
+    const renderItem = useCallback(() => {
         return (
             <View
                 style={{
@@ -35,7 +30,10 @@ export const CustomCarousel: React.FC<Props> = ({artefactInfos, artefactName}) =
                     marginRight: 25,
                 }}
             >
-                <Text style={{ fontSize: 30 }}>{artefactInfos}</Text>
+                <Image source={{
+                    uri: JSON.stringify(artefactInfos[0])
+                }}/>
+                <Text style={{ fontSize: 20 }}>{JSON.stringify(artefactInfos)}</Text>
                 <Text>{artefactName}</Text>
             </View>
         );

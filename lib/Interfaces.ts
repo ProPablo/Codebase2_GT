@@ -19,7 +19,8 @@ export interface IArtefactInfo {
     FileExtension: string,
     ArtefactInfoType: number, // 0, 1, 2, 3 (Text, Image, Video, Audio)
     Content: string,
-    Artefact: IBaseArtefact
+    Artefact: IArtefactSimple,
+    URI?: string
 }
 
 export interface IArtefactInfoFile extends IArtefactInfo {
@@ -38,10 +39,10 @@ export interface IBaseArtefact {
     Coord_X: number,
     Coord_Y: number,
     Activation: boolean,
-    Status: ArtefactStatus | number,
+    ArtefactStatus: ArtefactStatus | number,
     Zone: ICategoryZone | any,
-    Category: ICategoryZone | any,
-    Infos: IArtefactInfo[]
+    ArtefactCategory: ICategoryZone | any,
+    ArtefactInfos: IArtefactInfo[]
 }
 // [
 //     {
