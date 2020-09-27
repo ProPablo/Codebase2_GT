@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import Carousel from 'react-native-carousel';
 
 import {
   ScrollView,
@@ -45,7 +44,7 @@ const ArtefactsScreen: React.FC<Props> = ({ navigation }) => {
   function filterData() {
     console.log("Filteering data");
     const reg = RegExp(searchTerm, 'gi' );
-    setfiltered(artefacts?.filter((item)=> (item.Category + item.AdditionalComments + item.Description + item.Name).match(reg)));
+    setfiltered(artefacts?.filter((item)=> (item.ArtefactCategory?.Name || "" + item.AdditionalComments + item.Description + item.Name).match(reg)));
   }
 
   useEffect(()=> {
