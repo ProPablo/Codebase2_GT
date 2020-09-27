@@ -1,12 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   PermissionsAndroid, StyleSheet
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import 'react-native-gesture-handler';
-import { event } from 'react-native-reanimated';
 import ArtefactsContext from './components/Artefacts/ArtefactsContext';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import EventContext from './components/Events/EventContext';
@@ -15,9 +14,7 @@ import HomeScreen from './components/HomeScreen';
 import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
 import { getArtefacts, getEvents, getStore, processArtefact, processEvent } from './lib/Controllers';
-import { IArtefact, IArtefactInfoImage, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage, IExhibition } from './lib/Interfaces';
-import { NavigationTheme } from './lib/Styles';
-import { artefactsURL } from './lib/urls';
+import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage, IExhibition } from './lib/Interfaces';
 
 // const allPerms = [PermissionsAndroid.PERMISSIONS.BLUETOOTH, PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN, PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION];
 const requestLocationPermission = async () => {
@@ -111,7 +108,7 @@ export default function App() {
     loadArtefacts();
     loadEvents();
     loadStore();
-
+    //TODO create Hook for BT updates
     // requestLocationPermission()
     //   .then(() => {
     //     manager.current = new BleManager();
@@ -150,3 +147,13 @@ export default function App() {
   );
 
 }
+
+export const NavigationTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#A20C02',
+    card: '#F2E3A6',
+    text: '#000'
+  },
+};
