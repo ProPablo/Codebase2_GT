@@ -1,6 +1,6 @@
 import { HomeStackParams } from './HomeStack';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import {
@@ -9,8 +9,11 @@ import {
     StyleSheet,
     Button
 } from 'react-native';
-import { BottomSheet, Card, Header, ListItem } from 'react-native-elements';
+import { Card, Header, ListItem } from 'react-native-elements';
 import Video from 'react-native-video';
+import VideoComponent from './VideoComponent';
+import { baseURL } from '../../lib/urls';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 
 type NavigationProp = StackNavigationProp<HomeStackParams>
@@ -21,33 +24,32 @@ interface Props {
 }
 
 const TourScreen: React.FC<Props> = ({ navigation }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const list = [
-        { title: 'List Item 1' },
-        { title: 'List Item 2' },
-        {
-            title: 'Cancel',
-            containerStyle: { backgroundColor: 'red' },
-            titleStyle: { color: 'white' },
-            onPress: () => setIsVisible(false),
-        },
-    ];
 
+
+    const renderContent = () => (
+        <View
+          style={{
+            backgroundColor: 'white',
+            padding: 16,
+            height: 450,
+          }}
+        >
+          <VideoComponent/>
+        </View>
+      );
+
+    const video = useRef<Video>(null);
+
+    const sheetRef = useRef(null);
     return (
         <>
-            <Header title="BottomSheet" />
-            <Button title="Open POGGUM Sheet" onPress={() => setIsVisible(true)} />
-            <BottomSheet isVisible={isVisible}>
-                <View>
-                    <Video source={{ uri: "background" }}   // Can be a URL or a local file.
-                        ref={(ref) => {
-                            this.player = ref
-                        }}                                      // Store reference
-                        onBuffer={this.onBuffer}                // Callback when remote video is buffering
-                        onError={this.videoError}               // Callback when video cannot be loaded
-                        style={styles.backgroundVideo} />
-                </View>
-            </BottomSheet>
+            <Button title="Open POGGUM Sheet" onPress={() => sheetRef.current?.snapTo(0)} />
+            <BottomSheet
+                ref={sheetRef}
+                snapPoints={[450, 300, 0]}
+                borderRadius={10}
+                renderContent={renderContent}
+            />
         </>
     );
 }
@@ -59,6 +61,9 @@ const styles = StyleSheet.create({
     },
 
     image: {
+    },
+    backgroundVideo: {
+
     },
 
     text: {
