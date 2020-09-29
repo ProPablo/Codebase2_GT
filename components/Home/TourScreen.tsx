@@ -7,13 +7,15 @@ import {
     View,
     Text,
     StyleSheet,
-    Button
+    Button, 
+    Image,
 } from 'react-native';
 import { Card, Header, ListItem } from 'react-native-elements';
 import Video from 'react-native-video';
 import VideoComponent from './VideoComponent';
 import { baseURL } from '../../lib/urls';
 import BottomSheet from 'reanimated-bottom-sheet';
+
 
 
 type NavigationProp = StackNavigationProp<HomeStackParams>
@@ -24,19 +26,25 @@ interface Props {
 }
 
 const TourScreen: React.FC<Props> = ({ navigation }) => {
-
+    const images = [{
+        url: '',
+        props: {
+            // Or you can set source directory.
+            source: require('./floorplan.jpg')
+        }
+    }]
 
     const renderContent = () => (
         <View
-          style={{
-            backgroundColor: 'white',
-            padding: 16,
-            height: 450,
-          }}
+            style={{
+                backgroundColor: 'white',
+                padding: 16,
+                height: 450,
+            }}
         >
-          <VideoComponent/>
+            <VideoComponent />
         </View>
-      );
+    );
 
     const video = useRef<Video>(null);
 

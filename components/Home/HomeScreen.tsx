@@ -46,7 +46,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Pressable onPress={tourActionOnPress}>
                     <Card containerStyle={styles.tourContainerStyle} wrapperStyle={styles.wrapperStyle}>
                         <Card.Title style={styles.text}>{"Start Tour"}</Card.Title>
-                        <Icon/>
                     </Card>
                 </Pressable>
 
