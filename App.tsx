@@ -10,7 +10,7 @@ import ArtefactsContext from './components/Artefacts/ArtefactsContext';
 import { ArtefactStack } from './components/Artefacts/ArtefactStack';
 import EventContext from './components/Events/EventContext';
 import { EventStack } from './components/Events/EventStack';
-import HomeScreen from './components/HomeScreen';
+import { HomeStack } from './components/Home/HomeStack';
 import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
 import { getArtefacts, getEvents, getStore, processArtefact, processEvent } from './lib/Controllers';
@@ -57,7 +57,7 @@ const Tab = createBottomTabNavigator();
 function Tabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Artefacts" component={ArtefactStack} />
       <Tab.Screen name="Events" component={EventStack} />
       <Tab.Screen name="Store" component={StoreStack} />
