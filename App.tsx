@@ -15,6 +15,8 @@ import StoreContext from './components/Store/StoreContext';
 import { StoreStack } from './components/Store/StoreStack';
 import { getArtefacts, getEvents, getStore, processArtefact, processEvent } from './lib/Controllers';
 import { IArtefact, IBaseArtefact, IBaseExhibition, IBaseStoreItem, IBaseStoreItemImage, IExhibition } from './lib/Interfaces';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 // const allPerms = [PermissionsAndroid.PERMISSIONS.BLUETOOTH, PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN, PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION];
 const requestLocationPermission = async () => {
@@ -56,17 +58,46 @@ const Tab = createBottomTabNavigator();
 
 function Tabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Artefacts" component={ArtefactStack} />
-      <Tab.Screen name="Events" component={EventStack} />
-      <Tab.Screen name="Store" component={StoreStack} />
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ color, size }) => {
+        const icons = {
+          Home: "home",
+          Artefacts: "bank",
+          Events: "info-circle",
+          Store: "shopping-cart"
+        }
+
+        const sizes = {
+          Home: 25,
+          Artefacts: 20,
+          Events: 25,
+          Store: 25,
+        }
+
+        return (
+          <Icon name={icons[route.name]} size={sizes[route.name]} color={color} />
+        );
+      },
+    })}
+      tabBarOptions={{
+        activeTintColor: "#A20C02",
+      }}>
+      <Tab.Screen name="Home" component={HomeStack}/>
+      <Tab.Screen name="Artefacts" component={ArtefactStack}/>
+      <Tab.Screen name="Events" component={EventStack}/>
+      <Tab.Screen name="Store" component={StoreStack}/>
 
     </Tab.Navigator>
   );
 }
 
 
+// options={{
+//   tabBarIcon: ({ }) => (
+//     <Icon name="shopping-cart" size={30} />
+//   )
+// }} 
 
 export default function App() {
   const [artefacts, setArtefacts] = useState<IArtefact[]>([]);

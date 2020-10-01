@@ -9,7 +9,7 @@ import {
     StyleSheet, Button, Image, Pressable, Dimensions
 } from 'react-native';
 import { Card } from 'react-native-elements';
-import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type NavigationProp = StackNavigationProp<HomeStackParams>
 
@@ -46,7 +46,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Pressable onPress={tourActionOnPress}>
                     <Card containerStyle={styles.tourContainerStyle} wrapperStyle={styles.wrapperStyle}>
                         <Card.Title style={styles.text}>{"Start Tour"}</Card.Title>
+                        <Icon style={{alignSelf:"center"}} name="play" size={50} color="white"/>
                     </Card>
+                    
                 </Pressable>
 
             </View>
@@ -59,13 +61,10 @@ const dimensions = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     pageContainer: {
+        alignContent: "center",
         padding: 10,
         flex: 1,
         backgroundColor: '#F7EECA',
-    },
-    listItem: {
-        padding: 2,
-        margin: 2,
     },
 
     image: {
@@ -87,7 +86,9 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 4,
     },
+    
     tourContainerStyle: {
+        alignItems: "center",
         borderRadius: 10,
         backgroundColor: '#27d85c',
         shadowOffset: { width: 2, height: 2 },
