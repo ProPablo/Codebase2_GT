@@ -58,10 +58,10 @@ const StoreScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={ScreenStyles.pageContainer}>
-        <View style={ScreenStyles.searchInputs}>
+      <View style={styles.pageContainer}>
+        <View style={styles.searchInputs}>
           <TextInput
-            style={ScreenStyles.search}
+            style={styles.search}
             placeholder={ "Search Merchandise"}
             onChangeText={searchTerm => setsearchTerm(searchTerm)}
           />
@@ -83,5 +83,47 @@ const StoreScreen: React.FC<Props> = ({ navigation }) => {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  pageContainer: {
+      padding: 10,
+      flex: 1,
+      backgroundColor: '#F7EECA',
+  },
+  searchInputs: {
+      flexDirection: "row"
+  },
+  search: {
+      flex: 8,
+      marginBottom: 20,
+      borderColor: "#ffa616",
+      borderBottomWidth: 3,
+      padding: 10
+  },
+  switch: {
+      flex: 2
+  },
+  info: {
+      padding: 10,
+      marginTop: 20,
+      borderColor: "#f4cfce",
+      borderWidth: 1
+  },
+  row: {
+      flexDirection: "row",
+      backgroundColor: "#f4cfce"
+  },
+  row1: {
+      flexDirection: "row"
+  },
+  prop: {
+      flex: 1,
+      padding: 10
+  },
+  val: {
+      alignSelf: "center",
+      flex: 1
+  }
+});
 
 export default StoreScreen;

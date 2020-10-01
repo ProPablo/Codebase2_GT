@@ -1,19 +1,13 @@
-import { HomeStackParams } from './HomeStack';
-
-import React, { useState, useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import React, { useRef } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    Button, Image
+    Button,
+    Image, StyleSheet, View
 } from 'react-native';
-import Video from 'react-native-video';
-import VideoComponent from './VideoComponent';
 import BottomSheet from 'reanimated-bottom-sheet';
+import { HomeStackParams } from './HomeStack';
 import Transform from './Transform';
-
+import VideoComponent from './VideoComponent';
 
 type NavigationProp = StackNavigationProp<HomeStackParams>
 
@@ -26,15 +20,15 @@ const TourScreen: React.FC<Props> = ({ navigation }) => {
 
     const renderContent = () => (
         <View
-          style={{
-            backgroundColor: 'white',
-            padding: 16,
-            height: 450,
-          }}
+            style={{
+                backgroundColor: 'white',
+                padding: 16,
+                height: 450,
+            }}
         >
-          <VideoComponent/>
+            <VideoComponent />
         </View>
-      );
+    );
 
     const sheetRef = useRef(null);
     return (
