@@ -7,13 +7,12 @@ import {
     View,
     Text,
     StyleSheet,
-    Button
+    Button, Image
 } from 'react-native';
-import { Card, Header, ListItem } from 'react-native-elements';
 import Video from 'react-native-video';
 import VideoComponent from './VideoComponent';
-import { baseURL } from '../../lib/urls';
 import BottomSheet from 'reanimated-bottom-sheet';
+import Transform from './Transform';
 
 
 type NavigationProp = StackNavigationProp<HomeStackParams>
@@ -24,7 +23,6 @@ interface Props {
 }
 
 const TourScreen: React.FC<Props> = ({ navigation }) => {
-
 
     const renderContent = () => (
         <View
@@ -38,19 +36,18 @@ const TourScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       );
 
-    const video = useRef<Video>(null);
-
     const sheetRef = useRef(null);
     return (
-        <>
+        <View style={styles.containerStyle}>
             <Button title="Open POGGUM Sheet" onPress={() => sheetRef.current?.snapTo(0)} />
+            <Transform><Image source={require('../../static/floorplan.jpg')}/></Transform>
             <BottomSheet
                 ref={sheetRef}
                 snapPoints={[450, 300, 0]}
                 borderRadius={10}
                 renderContent={renderContent}
             />
-        </>
+        </View>
     );
 }
 
@@ -62,10 +59,6 @@ const styles = StyleSheet.create({
 
     image: {
     },
-    backgroundVideo: {
-
-    },
-
     text: {
         color: '#fff',
         textAlign: 'center',
@@ -73,12 +66,9 @@ const styles = StyleSheet.create({
     },
 
     containerStyle: {
-        borderRadius: 10,
-        backgroundColor: '#A20C02',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
-        elevation: 4,
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
     },
 
     wrapperStyle: {

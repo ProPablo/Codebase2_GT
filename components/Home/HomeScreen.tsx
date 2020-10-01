@@ -28,7 +28,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.text}>{"EVENT_DESCRIPTION"}</Text>
                 <Button title="Learn More" onPress={actionOnPress} />
                 <Card.Divider />
-
             </Card>
         </View>
     );
