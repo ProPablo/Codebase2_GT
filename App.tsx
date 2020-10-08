@@ -56,24 +56,26 @@ const styles = StyleSheet.create({
 
 const Tab = createBottomTabNavigator();
 
+const icons = {
+  Home: "home",
+  Artefacts: "bank",
+  Events: "info-circle",
+  Store: "shopping-cart"
+}
+
+const sizes = {
+  Home: 25,
+  Artefacts: 20,
+  Events: 25,
+  Store: 25,
+}
+
 function Tabs() {
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
-        const icons = {
-          Home: "home",
-          Artefacts: "bank",
-          Events: "info-circle",
-          Store: "shopping-cart"
-        }
 
-        const sizes = {
-          Home: 25,
-          Artefacts: 20,
-          Events: 25,
-          Store: 25,
-        }
 
         return (
           <Icon name={icons[route.name]} size={sizes[route.name]} color={color} />

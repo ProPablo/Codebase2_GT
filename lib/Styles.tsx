@@ -10,4 +10,19 @@ export function ActionBarIcon() {
             style={{ width: 300, height: 50, marginLeft: 15 }} />
     );
 }
+export const globalStyle = StyleSheet.create({
+    shadow: {
+        // this is for iOS
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        // this is for Android
+        elevation: 4,
+    },
+
+    imageShadow: {
+        borderColor: '#000',
+        borderRadius: 20,
+    }
+})
 
