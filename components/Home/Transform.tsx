@@ -1,22 +1,38 @@
 import React from 'react'
 import { StyleSheet, Text, View, Animated } from 'react-native';
-import { PinchGestureHandler, PanGestureHandler, State, PanGestureHandlerStateChangeEvent } from 'react-native-gesture-handler';
+import { PinchGestureHandler, PanGestureHandler, State } from 'react-native-gesture-handler';
 
 const minScale = 0.5;
 const maxScale = 2;
 
 const USE_NATIVE_DRIVER = true;
 
+export interface Props {
+    children: React.ReactNode
+}
+
 export default class Transform extends React.Component {
 
+    // _baseScale = new Animated.Value(1);
+    // _pinchScale = new Animated.Value(1);
+    // _scale = Animated.multiply(this._baseScale, this._pinchScale);
+    // _lastScale = 1;
+    // _onPinchGestureEvent = Animated.event(
+    //     [{ nativeEvent: { scale: this._pinchScale } }],
+    //     { useNativeDriver: true }
+    // );
+    // panOffset = new Animated.ValueXY();
+
     onPinchGestureEvent: (...args: any[]) => void;
+    onPanGestureEvent: (...args: any[]) => void;
     lastScale: number;
     scale: Animated.AnimatedMultiplication;
     pinchScale: Animated.Value;
     baseScale: Animated.Value;
+    panOffset: Animated.ValueXY;
     panRef = React.createRef<PanGestureHandler>();
     pinchRef = React.createRef<PinchGestureHandler>();
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
 
         /* Pinching */
@@ -24,14 +40,29 @@ export default class Transform extends React.Component {
         this.pinchScale = new Animated.Value(1);
         this.scale = Animated.multiply(this.baseScale, this.pinchScale);
         this.lastScale = 1;
+        this.panOffset = new Animated.ValueXY();
+
         this.onPinchGestureEvent = Animated.event(
             [{ nativeEvent: { scale: this.pinchScale } }],
             { useNativeDriver: USE_NATIVE_DRIVER }
         );
 
+        this.onPanGestureEvent = Animated.event(
+            [
+                {
+                    nativeEvent: {
+                        translationX: this.panOffset.x,
+                        translationY: this.panOffset.y,
+                    },
+                },
+            ],
+            { useNativeDriver: true }
+        );
+        this.panRef = React.createRef();
+        this.pinchRef = React.createRef();
     }
 
-    onPinchHandlerStateChange = event => {
+    onPinchHandlerStateChange = (event: any) => {
         if (event.nativeEvent.oldState === State.ACTIVE) {
             this.lastScale *= event.nativeEvent.scale;
             this.baseScale.setValue(this.lastScale);
@@ -39,6 +70,11 @@ export default class Transform extends React.Component {
         }
     };
 
+
+
+    onPanHandlerStateChange = () => {
+        this.panOffset.extractOffset();
+    }
 
     // const panResponder = useRef(
     //     PanResponder.create({
@@ -71,22 +107,28 @@ export default class Transform extends React.Component {
     //     })
     // ).current;
     render() {
-
         return (
             <View>
-                <PinchGestureHandler
-                    onGestureEvent={this.onPinchGestureEvent}
-                    onHandlerStateChange={this.onPinchHandlerStateChange}>
-                    <Animated.View
-                        style={[
-                            {
-                                transform: [{ scale: this.scale }],
-                            },
-                        ]}
-                    >
-                        {this.props.children}
+                <PanGestureHandler onGestureEvent={this.onPanGestureEvent} onHandlerStateChange={this.onPanHandlerStateChange} ref={this.panRef} maxPointers={2} avgTouches>
+                    <Animated.View>
+                        <PinchGestureHandler
+                            onGestureEvent={this.onPinchGestureEvent}
+                            onHandlerStateChange={this.onPinchHandlerStateChange}
+                            ref={this.pinchRef}
+                            simultaneousHandlers={this.panRef}
+                        >
+                            <Animated.View
+                                style={[
+                                    {
+                                        transform: [{ perspective: 200 }, { scale: this.scale }, { translateX: this.panOffset.x }, { translateY: this.panOffset.y }],
+                                    },
+                                ]}
+                            >
+                                {this.props.children}
+                            </Animated.View>
+                        </PinchGestureHandler>
                     </Animated.View>
-                </PinchGestureHandler>
+                </PanGestureHandler>
             </View>
         )
     }
