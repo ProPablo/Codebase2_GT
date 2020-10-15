@@ -1,16 +1,14 @@
-import React, { useContext, useRef, useState } from 'react';
-
-import {
-    View,
-    Text,
-    Image,
-    StyleSheet
-} from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { ArtefactStackParams } from './ArtefactStack';
-import ArtefactsContext from './ArtefactsContext';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useContext } from 'react';
+import {
+    Dimensions, Image,
+    StyleSheet, Text, View
+} from 'react-native';
+import { globalStyle } from '../../lib/Styles';
 import CustomCarousel from './ArtefactDetailCarousel';
+import ArtefactsContext from './ArtefactsContext';
+import { ArtefactStackParams } from './ArtefactStack';
+
 
 type ArtefactStackRoute = RouteProp<ArtefactStackParams, 'ArtefactDetails'>
 
@@ -25,31 +23,58 @@ const ArtefactDetailScreen: React.FC<Props> = ({ route }) => {
     //console.log("artefacts from deatil scrren", artefacts);
     const artefact = artefacts?.find((item) => item.Id === artefactId);
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.pageContainer}>
+
+            {artefact &&
+                <View>
+                    <View style={[globalStyle.imageShadow, globalStyle.shadow]}>
+                        <Image source={{
+                            uri: artefact.URI,
+                        }} style={[styles.image, styles.shadow]} />
+                    </View>
+
+                    <Text style={styles.textName}> {artefact.Name}</Text>
+                    <Text style={styles.textDescr}>{artefact.Description}</Text>
+                    <Text style={styles.textDescr}>{artefact.AdditionalComments}</Text>
+                    <Text style={styles.textDescr}>{artefact.Zone}</Text>
+                </View>
+            }
             <CustomCarousel
                 artefactInfos={artefact?.Infos}
                 artefactName={artefact?.Name}
             />
-
-            <Text>Artefact Details!</Text>
-            <Text>This is id: {artefactId}</Text>
-            {artefact &&
-                <View>
-                    <Text> {artefact.Name}</Text>
-                    <Image source={{
-                        uri: artefact.URI,
-                    }} style={styles.image} />
-                </View>
-            }
         </View>
     )
 }
 
+const dimensions = Dimensions.get('window');
+
 const styles = StyleSheet.create({
+    pageContainer: {
+        alignContent: 'center',
+        padding: 10,
+        flex: 1,
+        backgroundColor: '#F7EECA',
+    },
+
     image: {
-        width: 50,
-        height: 50
-    }
+        width: Math.round(dimensions.width * 15 / 16),
+        height: 200,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+
+    textName: {
+        fontSize: 30,
+        textAlign: 'center',
+        fontFamily: 'Roboto'
+    },
+
+    textDescr: {
+        fontSize: 15,
+        textAlign: 'center',
+        fontFamily: 'Roboto'
+    },
 });
 
 export default ArtefactDetailScreen;

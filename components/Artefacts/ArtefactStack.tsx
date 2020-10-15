@@ -20,7 +20,7 @@ export const ArtefactStack: React.FC = () => {
                 options={{
                     headerLeft: props => <ActionBarIcon {...props} />
                 }} />
-            <Stack.Screen name="ArtefactDetails" component={ArtefactDetailsScreen} />
+            <Stack.Screen name="ArtefactDetails" component={ArtefactDetailsScreen}/>
         </Stack.Navigator>
     )
 }
