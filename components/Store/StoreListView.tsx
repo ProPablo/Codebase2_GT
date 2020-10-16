@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Card } from 'react-native-elements';
 import { IBaseStoreItem, IBaseStoreItemImage } from '../../lib/Interfaces';
-import { ListViewStyles } from '../../lib/Styles';
+import { globalStyle } from '../../lib/Styles';
 import StoreContext from './StoreContext';
 
 
@@ -16,10 +16,10 @@ const StoreListView = ({ store }: Props) => {
     // console.log("Logging store", storeItems);
     return (
 
-        <View style={ListViewStyles.listItem}>
-            <Card containerStyle={ListViewStyles.containerStyle} wrapperStyle={ListViewStyles.wrapperStyle}>
-                <Card.Title style={ListViewStyles.text}>{store.Name}</Card.Title>
-                <Text style={ListViewStyles.text}>{store.Description}</Text>
+        <View style={globalStyle.listItem}>
+            <Card containerStyle={globalStyle.containerStyle} wrapperStyle={globalStyle.wrapperStyle}>
+                <Card.Title style={globalStyle.text}>{store.Name}</Card.Title>
+                <Text style={globalStyle.text}>{store.Description}</Text>
                 <Card.Divider />
 
             </Card>

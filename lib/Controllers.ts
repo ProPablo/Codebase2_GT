@@ -5,9 +5,9 @@ import testjson from '../test.json';
 export async function getArtefacts(): Promise<IBaseArtefact[]> {
   let json;
   try {
-    // const result = await fetch(artefactsURL);
-    // json = await result.json();
-    json = testjson;
+    const result = await fetch(artefactsURL);
+    json = await result.json();
+    //json = testjson;
     return json;
   } catch (error) {
     console.error("ERROR RETREIVING ARTEFACTS");

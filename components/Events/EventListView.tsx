@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Card } from 'react-native-elements';
 import { event } from 'react-native-reanimated';
 import { IBaseExhibition, IExhibition } from '../../lib/Interfaces';
-import { ListViewStyles } from '../../lib/Styles';
+import { globalStyle } from '../../lib/Styles';
 import EventsContext from './EventContext';
 
 
@@ -13,14 +13,14 @@ interface Props {
 
 const ExhibitionListView = ({ exhibition }: Props) => {
     return (
-        <View style={ListViewStyles.listItem}>
-            <Card containerStyle={ListViewStyles.containerStyle} wrapperStyle={ListViewStyles.wrapperStyle}>
-                <Card.Title style={ListViewStyles.text}>{exhibition.Name}</Card.Title>
-                <Text style={ListViewStyles.text}>{exhibition.Description}</Text>
+        <View style={globalStyle.listItem}>
+            <Card containerStyle={globalStyle.containerStyle} wrapperStyle={globalStyle.wrapperStyle}>
+                <Card.Title style={globalStyle.text}>{exhibition.Name}</Card.Title>
+                <Text style={globalStyle.text}>{exhibition.Description}</Text>
                 <Card.Divider />
-                <Card.Image style={ListViewStyles.image} source={{
+                {/* <Card.Image style={globalStyle.image} source={{
                     uri: exhibition.URI,
-                }}/>
+                }}/> */}
 
             </Card>
 

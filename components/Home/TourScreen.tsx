@@ -34,13 +34,14 @@ const TourScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.containerStyle}>
             <Button title="Open POGGUM Sheet" onPress={() => sheetRef.current?.snapTo(0)} />
-            <Transform><Image source={require('../../static/floorplan.jpg')}/></Transform>
             <BottomSheet
                 ref={sheetRef}
                 snapPoints={[450, 300, 0]}
                 borderRadius={10}
                 renderContent={renderContent}
             />
+            <Transform><Image source={require('../../static/floorplan.jpg')}/></Transform>
+            
         </View>
     );
 }
